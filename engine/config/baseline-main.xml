@@ -1,0 +1,88 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>ConstructorParameterNaming:Social.kt$Social$val Bitcointalk: String</ID>
+    <ID>ConstructorParameterNaming:Social.kt$Social$val Explorer1: String</ID>
+    <ID>ConstructorParameterNaming:Social.kt$Social$val Explorer2: String</ID>
+    <ID>ConstructorParameterNaming:Social.kt$Social$val Explorer3: String</ID>
+    <ID>ConstructorParameterNaming:Social.kt$Social$val Explorer: String</ID>
+    <ID>ConstructorParameterNaming:Social.kt$Social$val Reddit: String</ID>
+    <ID>EmptyClassBlock:IService.kt$IService${ }</ID>
+    <ID>EmptyDefaultConstructor:LogService.kt$LogService$()</ID>
+    <ID>InjectDispatcher:CoincodexScheduler.kt$CoincodexScheduler$IO</ID>
+    <ID>InjectDispatcher:SchedulerService.kt$SchedulerService$Default</ID>
+    <ID>InjectDispatcher:SwapzoneScheduler.kt$SwapzoneScheduler$IO</ID>
+    <ID>InjectDispatcher:SwapzoneService.kt$SwapzoneService$IO</ID>
+    <ID>MagicNumber:HttpClientConfiguration.kt$HttpClientConfiguration$0.9F</ID>
+    <ID>MagicNumber:HttpClientConfiguration.kt$HttpClientConfiguration$3</ID>
+    <ID>MagicNumber:HttpClientConfiguration.kt$HttpClientConfiguration$3000L</ID>
+    <ID>MatchingDeclarationName:LoggingCtx.kt$LogCtx&lt;A : Logger, B : Loggable&lt;*&gt;&gt;</ID>
+    <ID>MaxLineLength:CoincodexScheduler.kt$CoincodexScheduler$asLoggable</ID>
+    <ID>MaxLineLength:ILoggable.kt$ILoggable$fun debug()</ID>
+    <ID>MaxLineLength:ILoggable.kt$ILoggable$fun trace()</ID>
+    <ID>MaxLineLength:ILoggable.kt$ILoggable$fun warn()</ID>
+    <ID>NewLineAtEndOfFile:AthData.kt$chronos.engine.implementation.models.coincodex.AthData.kt</ID>
+    <ID>NewLineAtEndOfFile:AtlData.kt$chronos.engine.implementation.models.coincodex.AtlData.kt</ID>
+    <ID>NewLineAtEndOfFile:Coin.kt$chronos.engine.implementation.models.coincodex.Coin.kt</ID>
+    <ID>NewLineAtEndOfFile:CoincodexApi.kt$chronos.engine.implementation.apis.coincodex.CoincodexApi.kt</ID>
+    <ID>NewLineAtEndOfFile:CoincodexScheduler.kt$chronos.engine.implementation.apis.coincodex.CoincodexScheduler.kt</ID>
+    <ID>NewLineAtEndOfFile:CurrenciesRequest.kt$chronos.engine.implementation.apis.swapzone.requests.exchange.CurrenciesRequest.kt</ID>
+    <ID>NewLineAtEndOfFile:ExternalApi.kt$chronos.engine.implementation.apis.ExternalApi.kt</ID>
+    <ID>NewLineAtEndOfFile:GetCoinRequest.kt$chronos.engine.implementation.apis.coincodex.requests.GetCoinRequest.kt</ID>
+    <ID>NewLineAtEndOfFile:HTTPClientService.kt$chronos.engine.implementation.services.HTTPClientService.kt</ID>
+    <ID>NewLineAtEndOfFile:HttpClientConfiguration.kt$chronos.engine.configuration.HttpClientConfiguration.kt</ID>
+    <ID>NewLineAtEndOfFile:IExternalApi.kt$chronos.engine.core.interfaces.apis.IExternalApi.kt</ID>
+    <ID>NewLineAtEndOfFile:IExternalApiAuthenticator.kt$chronos.engine.core.interfaces.apis.IExternalApiAuthenticator.kt</ID>
+    <ID>NewLineAtEndOfFile:IExternalApiRequest.kt$chronos.engine.core.interfaces.apis.IExternalApiRequest.kt</ID>
+    <ID>NewLineAtEndOfFile:ILogLevel.kt$chronos.engine.core.interfaces.ILogLevel.kt</ID>
+    <ID>NewLineAtEndOfFile:ILoggable.kt$chronos.engine.core.interfaces.ILoggable.kt</ID>
+    <ID>NewLineAtEndOfFile:IService.kt$chronos.engine.core.interfaces.IService.kt</ID>
+    <ID>NewLineAtEndOfFile:InitialData.kt$chronos.engine.implementation.models.coincodex.InitialData.kt</ID>
+    <ID>NewLineAtEndOfFile:LocalDateTimeTypeAdapter.kt$chronos.engine.core.gson.adapters.LocalDateTimeTypeAdapter.kt</ID>
+    <ID>NewLineAtEndOfFile:LocalDateTypeAdapter.kt$chronos.engine.core.gson.adapters.LocalDateTypeAdapter.kt</ID>
+    <ID>NewLineAtEndOfFile:LogLevel.kt$chronos.engine.implementation.logging.LogLevel.kt</ID>
+    <ID>NewLineAtEndOfFile:LogService.kt$chronos.engine.implementation.services.LogService.kt</ID>
+    <ID>NewLineAtEndOfFile:Loggable.kt$chronos.engine.implementation.logging.Loggable.kt</ID>
+    <ID>NewLineAtEndOfFile:Network.kt$chronos.engine.implementation.models.swapzone.Network.kt</ID>
+    <ID>NewLineAtEndOfFile:NetworkEntity.kt$chronos.engine.implementation.models.swapzone.db.NetworkEntity.kt</ID>
+    <ID>NewLineAtEndOfFile:Reflection.kt$chronos.engine.util.Reflection.kt</ID>
+    <ID>NewLineAtEndOfFile:SchedulerService.kt$chronos.engine.core.services.SchedulerService.kt</ID>
+    <ID>NewLineAtEndOfFile:SchemaConfiguration.kt$chronos.engine.configuration.SchemaConfiguration.kt</ID>
+    <ID>NewLineAtEndOfFile:Social.kt$chronos.engine.implementation.models.coincodex.Social.kt</ID>
+    <ID>NewLineAtEndOfFile:Socials.kt$chronos.engine.implementation.models.coincodex.Socials.kt</ID>
+    <ID>NewLineAtEndOfFile:SwapzoneApi.kt$chronos.engine.implementation.apis.swapzone.SwapzoneApi.kt</ID>
+    <ID>NewLineAtEndOfFile:SwapzoneController.kt$chronos.engine.implementation.apis.swapzone.SwapzoneController.kt</ID>
+    <ID>NewLineAtEndOfFile:SwapzoneScheduler.kt$chronos.engine.implementation.apis.swapzone.SwapzoneScheduler.kt</ID>
+    <ID>NewLineAtEndOfFile:SwapzoneService.kt$chronos.engine.implementation.apis.swapzone.SwapzoneService.kt</ID>
+    <ID>SpreadOperator:EngineApplication.kt$EngineApplication.Companion$(*args)</ID>
+    <ID>TooGenericExceptionCaught:CoincodexScheduler.kt$CoincodexScheduler$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:SwapzoneScheduler.kt$SwapzoneScheduler$ex: Exception</ID>
+    <ID>UnnecessaryAbstractClass:SchedulerService.kt$SchedulerService$SchedulerService</ID>
+    <ID>UseOrEmpty:SwapzoneService.kt$SwapzoneService$request.name ?: ""</ID>
+    <ID>UtilityClassWithPublicConstructor:EngineApplication.kt$EngineApplication</ID>
+    <ID>UtilityClassWithPublicConstructor:Reflection.kt$Reflection</ID>
+    <ID>VariableNaming:LocalDateTimeTypeAdapter.kt$LocalDateTimeTypeAdapter$/** Formatter. */ private val FORMATTER: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")</ID>
+    <ID>WildcardImport:CoincodexApi.kt$import io.ktor.client.request.*</ID>
+    <ID>WildcardImport:CoincodexApi.kt$import io.ktor.client.statement.*</ID>
+    <ID>WildcardImport:ExternalApi.kt$import io.ktor.client.statement.*</ID>
+    <ID>WildcardImport:HTTPClientService.kt$import io.ktor.client.*</ID>
+    <ID>WildcardImport:HttpClientConfiguration.kt$import io.ktor.client.*</ID>
+    <ID>WildcardImport:HttpClientConfiguration.kt$import io.ktor.client.engine.okhttp.*</ID>
+    <ID>WildcardImport:HttpClientConfiguration.kt$import io.ktor.client.plugins.*</ID>
+    <ID>WildcardImport:HttpClientConfiguration.kt$import io.ktor.client.plugins.cache.*</ID>
+    <ID>WildcardImport:HttpClientConfiguration.kt$import io.ktor.client.plugins.cache.storage.*</ID>
+    <ID>WildcardImport:HttpClientConfiguration.kt$import io.ktor.client.plugins.compression.*</ID>
+    <ID>WildcardImport:HttpClientConfiguration.kt$import io.ktor.client.plugins.contentnegotiation.*</ID>
+    <ID>WildcardImport:HttpClientConfiguration.kt$import io.ktor.client.plugins.logging.*</ID>
+    <ID>WildcardImport:HttpClientConfiguration.kt$import io.ktor.http.*</ID>
+    <ID>WildcardImport:HttpClientConfiguration.kt$import io.ktor.serialization.gson.*</ID>
+    <ID>WildcardImport:IExternalApi.kt$import io.ktor.client.statement.*</ID>
+    <ID>WildcardImport:IExternalApiAuthenticator.kt$import io.ktor.client.request.*</ID>
+    <ID>WildcardImport:LocalDateTimeTypeAdapter.kt$import com.google.gson.*</ID>
+    <ID>WildcardImport:LocalDateTypeAdapter.kt$import com.google.gson.*</ID>
+    <ID>WildcardImport:SchedulerService.kt$import kotlinx.coroutines.*</ID>
+    <ID>WildcardImport:SwapzoneApi.kt$import io.ktor.client.request.*</ID>
+    <ID>WildcardImport:SwapzoneApi.kt$import io.ktor.client.statement.*</ID>
+  </CurrentIssues>
+</SmellBaseline>
