@@ -14,10 +14,12 @@ import org.springframework.stereotype.Service
 @Service
 class SwapzoneApi @Autowired constructor(
     override val httpClient: HTTPClientService,
-    override val gson : Gson
+    override val gson : Gson,
+    @Value("\${swapzone.api.baseurl}")
+    var baseURL: String
 ) : ExternalApi(
     name = "Swapzone",
-    baseUrl ="https://api.swapzone.io/v1/",
+    baseUrl = baseURL,
     httpClient = httpClient,
     gson = gson
 ), IExternalApiAuthenticator {

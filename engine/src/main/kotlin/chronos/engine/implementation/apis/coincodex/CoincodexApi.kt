@@ -7,15 +7,18 @@ import com.google.gson.Gson
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 
 @Service
 class CoincodexApi @Autowired constructor(
     override val httpClient: HTTPClientService,
-    override val gson : Gson
+    override val gson : Gson,
+    @Value("\${coincodex.api.baseurl}")
+    override val baseUrl: String,
 ) : ExternalApi(
     name = "coincodex",
-    baseUrl ="https://coincodex.com/api/coincodex/",
+    baseUrl = baseUrl,
     httpClient = httpClient,
     gson = gson
 ) {
