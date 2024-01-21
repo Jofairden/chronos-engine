@@ -37,6 +37,9 @@ class SwapzoneScheduler @Autowired constructor(
             initialDelay = 1000L,
         ) {
             try {
+                asLoggable(api.baseUrl) {
+                    error()
+                }
                 with(api) {
                     getRequest().execute {
                         val data = getJsonCollection<NetworkObject>()

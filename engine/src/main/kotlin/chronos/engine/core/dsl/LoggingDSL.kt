@@ -21,14 +21,3 @@ fun <B : Any> asLoggable(
     val ctx = LogCtx.of(loggable)
     return ctx.apply { this.block() }.let { loggable }
 }
-
-
-/**
- * Logs a message using the provided logger.
- *
- * @param block a lambda function that configures the logging context
- * @param T the type of the loggable object
- */
-fun <T : Any> Loggable<T>.log(block: LogCtx<Logger, Loggable<T>>.() -> Unit) {
-    LogCtx.of(this).apply(block)
-}
