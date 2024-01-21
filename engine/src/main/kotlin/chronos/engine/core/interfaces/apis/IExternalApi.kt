@@ -1,7 +1,7 @@
 package chronos.engine.core.interfaces.apis
 
 import chronos.engine.implementation.services.HTTPClientService
-import io.ktor.client.statement.*
+import io.ktor.client.statement.HttpResponse
 
 /**
  * Represents an external API.

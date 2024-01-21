@@ -13,7 +13,7 @@ import java.time.temporal.TemporalQuery
  */
 class LocalDateTimeTypeAdapter : JsonSerializer<LocalDateTime>, JsonDeserializer<LocalDateTime> {
     /** Formatter.  */
-    private val FORMATTER: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+    private val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
 
     /**
      * Gson invokes this call-back method during serialization when it encounters a field of the
@@ -32,7 +32,7 @@ class LocalDateTimeTypeAdapter : JsonSerializer<LocalDateTime>, JsonDeserializer
      * @return a JsonElement corresponding to the specified object.
      */
     override fun serialize(src: LocalDateTime?, typeOfSrc: Type?, context: JsonSerializationContext?): JsonElement {
-        return JsonPrimitive(FORMATTER.format(src))
+        return JsonPrimitive(formatter.format(src))
     }
 
     /**
@@ -54,7 +54,7 @@ class LocalDateTimeTypeAdapter : JsonSerializer<LocalDateTime>, JsonDeserializer
      */
     @Throws(JsonParseException::class)
     override fun deserialize(json: JsonElement, typeOfT: Type?, context: JsonDeserializationContext?): LocalDateTime {
-        return FORMATTER.parse(json.asString, TemporalQuery { temporal: TemporalAccessor? ->
+        return formatter.parse(json.asString, TemporalQuery { temporal: TemporalAccessor? ->
             LocalDateTime.from(
                 temporal
             )

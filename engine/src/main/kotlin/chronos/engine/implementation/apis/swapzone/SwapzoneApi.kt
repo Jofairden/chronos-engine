@@ -5,8 +5,10 @@ import chronos.engine.core.interfaces.apis.IExternalApiRequest
 import chronos.engine.implementation.apis.ExternalApi
 import chronos.engine.implementation.services.HTTPClientService
 import com.google.gson.Gson
-import io.ktor.client.request.*
-import io.ktor.client.statement.*
+import io.ktor.client.request.HttpRequestBuilder
+import io.ktor.client.request.get
+import io.ktor.client.request.headers
+import io.ktor.client.statement.HttpResponse
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service

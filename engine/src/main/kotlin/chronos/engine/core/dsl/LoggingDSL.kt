@@ -1,7 +1,7 @@
 package chronos.engine.core.dsl
 
-import chronos.engine.implementation.logging.LogCtx
 import chronos.engine.implementation.logging.Loggable
+import chronos.engine.implementation.logging.LoggingContext
 import org.slf4j.Logger
 
 
@@ -15,9 +15,9 @@ import org.slf4j.Logger
  */
 fun <B : Any> asLoggable(
     value: B,
-    block: LogCtx<Logger, Loggable<B>>.() -> Unit
+    block: LoggingContext<Logger, Loggable<B>>.() -> Unit
 ): Loggable<B> {
     val loggable = Loggable<B>(value)
-    val ctx = LogCtx.of(loggable)
+    val ctx = LoggingContext.of(loggable)
     return ctx.apply { this.block() }.let { loggable }
 }

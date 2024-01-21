@@ -4,7 +4,8 @@ import chronos.engine.core.interfaces.apis.IExternalApi
 import chronos.engine.implementation.services.HTTPClientService
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import io.ktor.client.statement.*
+import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.bodyAsText
 import java.lang.reflect.Type
 
 /**

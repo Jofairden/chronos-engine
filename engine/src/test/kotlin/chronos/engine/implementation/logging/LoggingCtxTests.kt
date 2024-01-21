@@ -1,7 +1,13 @@
 package chronos.engine.implementation.logging
 
-import io.mockk.*
+import io.mockk.MockKAnnotations
+import io.mockk.confirmVerified
+import io.mockk.every
 import io.mockk.junit5.MockKExtension
+import io.mockk.mockk
+import io.mockk.mockkObject
+import io.mockk.spyk
+import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -18,7 +24,7 @@ class LoggingCtxTests {
 
     lateinit var logger: Logger
 
-    lateinit var mock: LogCtx<Logger, Loggable<Any>>
+    lateinit var mock: LoggingContext<Logger, Loggable<Any>>
 
     lateinit var loggable: Loggable<Any>
 
@@ -26,7 +32,7 @@ class LoggingCtxTests {
     fun setUp() {
         logger = spyk(LoggerFactory.getLogger(LoggingCtxTests::class.java))
         loggable = mockk(relaxed = true)
-        mock = spyk(LogCtx(logger, loggable))
+        mock = spyk(LoggingContext(logger, loggable))
         MockKAnnotations.init(this)
 
         every { loggable.loggable } returns "Mock Value"
@@ -217,13 +223,13 @@ class LoggingCtxTests {
 
     @Test
     fun `companion functie of maakt juiste object aan`() {
-        mockkObject(LogCtx.Companion) {
-            every { LogCtx.Companion.of(any()) } answers { callOriginal() }
+        mockkObject(LoggingContext.Companion) {
+            every { LoggingContext.Companion.of(any()) } answers { callOriginal() }
 
-            val waarde = LogCtx.Companion.of(loggable)
+            val waarde = LoggingContext.Companion.of(loggable)
 
             verify(exactly = 1) {
-                LogCtx.Companion.of(any())
+                LoggingContext.Companion.of(any())
             }
             assertTrue {
                 waarde.logger !== logger
