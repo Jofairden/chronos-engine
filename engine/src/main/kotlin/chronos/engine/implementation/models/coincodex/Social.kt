@@ -9,5 +9,5 @@ data class Social(
     val Explorer1: String,
     val Explorer2: String,
     val Explorer3: String,
-    val Reddit: String
+    val Reddit: String,
 )

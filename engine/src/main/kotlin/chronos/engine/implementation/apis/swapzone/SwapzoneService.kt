@@ -13,35 +13,35 @@ import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransacti
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
-
 @Service
 @Transactional
 class SwapzoneService {
-
     data class NetworkCreateRequest(
         val name: String?,
         val ticker: String,
         val network: String,
-        val smartContract: String
+        val smartContract: String,
     )
 
     data class NetworkUpdateRequest(
         val name: String?,
         val ticker: String?,
         val network: String?,
-        val smartContract: String?
+        val smartContract: String?,
     )
 
     fun create(request: NetworkCreateRequest): NetworkId {
         asLoggable("Creating new NetworkEntity from request: $request") {
             info()
         }
-        return NetworkId(NetworkEntity.insertAndGetId {
-            it[name] = request.name ?: ""
-            it[ticker] = request.ticker
-            it[network] = request.network
-            it[smartContract] = request.smartContract
-        }.value)
+        return NetworkId(
+            NetworkEntity.insertAndGetId {
+                it[name] = request.name ?: ""
+                it[ticker] = request.ticker
+                it[network] = request.network
+                it[smartContract] = request.smartContract
+            }.value,
+        )
     }
 
     fun delete(id: NetworkId) {
@@ -59,20 +59,20 @@ class SwapzoneService {
                 name = it[NetworkEntity.name],
                 ticker = it[NetworkEntity.ticker],
                 network = it[NetworkEntity.network],
-                smartContract = it[NetworkEntity.smartContract]
-            )
-        }
-    }
-
-    suspend fun getAll() = newSuspendedTransaction(Dispatchers.IO) {
-        NetworkEntity.selectAll().map {
-            NetworkObject(
-                name = it[NetworkEntity.name],
-                ticker = it[NetworkEntity.ticker],
-                network = it[NetworkEntity.network],
                 smartContract = it[NetworkEntity.smartContract],
             )
         }
-
     }
+
+    suspend fun getAll() =
+        newSuspendedTransaction(Dispatchers.IO) {
+            NetworkEntity.selectAll().map {
+                NetworkObject(
+                    name = it[NetworkEntity.name],
+                    ticker = it[NetworkEntity.ticker],
+                    network = it[NetworkEntity.network],
+                    smartContract = it[NetworkEntity.smartContract],
+                )
+            }
+        }
 }

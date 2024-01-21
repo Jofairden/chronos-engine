@@ -7,5 +7,5 @@ class GetCoinRequest(
     val coin: String,
     override val api: CoincodexApi,
 ) : IExternalApiRequest {
-    override val endpoint: String = "get_coin/${coin}"
+    override val endpoint: String = "get_coin/$coin"
 }

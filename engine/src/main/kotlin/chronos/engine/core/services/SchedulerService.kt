@@ -34,7 +34,7 @@ abstract class SchedulerService(scope: CoroutineScope) {
         override val indefinitely: Boolean = false,
         override val initialDelay: Long = 0L,
         override val delayInMillis: Long = 0L,
-        override val task: (suspend () -> Unit)? = null
+        override val task: (suspend () -> Unit)? = null,
     ) : ITaskRequest
 
     private val tasksFlow = MutableSharedFlow<TaskRequest>()
@@ -50,23 +50,25 @@ abstract class SchedulerService(scope: CoroutineScope) {
                     return@collect
                 }
 
-                val job = launch {
-                    if (taskRequest.initialDelay > 0) delay(taskRequest.initialDelay)
+                val job =
+                    launch {
+                        if (taskRequest.initialDelay > 0) delay(taskRequest.initialDelay)
 
-                    when {
-                        taskRequest.indefinitely -> while (isActive) {
-                            taskRequest.task?.let { it() }
-                            if (taskRequest.delayInMillis > 0) delay(taskRequest.delayInMillis)
+                        when {
+                            taskRequest.indefinitely -> while (isActive) {
+                                taskRequest.task?.let { it() }
+                                if (taskRequest.delayInMillis > 0) delay(taskRequest.delayInMillis)
+                            }
+
+                            taskRequest.repeatCount > 0 ->
+                                repeat(taskRequest.repeatCount) {
+                                    taskRequest.task?.let { it() }
+                                    if (taskRequest.delayInMillis > 0) delay(taskRequest.delayInMillis)
+                                }
+
+                            else -> taskRequest.task?.let { it() }
                         }
-
-                        taskRequest.repeatCount > 0 -> repeat(taskRequest.repeatCount) {
-                            taskRequest.task?.let { it() }
-                            if (taskRequest.delayInMillis > 0) delay(taskRequest.delayInMillis)
-                        }
-
-                        else -> taskRequest.task?.let { it() }
                     }
-                }
                 jobs[taskRequest.id] = job
                 job.invokeOnCompletion { jobs.remove(taskRequest.id) }
             }
@@ -79,6 +81,7 @@ abstract class SchedulerService(scope: CoroutineScope) {
      * @receiver The task request to be scheduled.
      */
     suspend fun TaskRequest.schedule() = tasksFlow.emit(this)
+
     /**
      * Schedules a task based on the provided TaskRequest.
      *
@@ -86,6 +89,7 @@ abstract class SchedulerService(scope: CoroutineScope) {
      * @throws Exception if an error occurs while scheduling the task.
      */
     suspend fun scheduleTask(req: TaskRequest) = req.schedule()
+
     /**
      * Cancels the task with the specified ID.
      *

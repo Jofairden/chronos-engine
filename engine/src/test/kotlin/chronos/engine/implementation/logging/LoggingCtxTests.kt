@@ -21,7 +21,6 @@ import kotlin.test.assertTrue
 @RunWith(SpringRunner::class)
 @ExtendWith(MockKExtension::class)
 class LoggingCtxTests {
-
     lateinit var logger: Logger
 
     lateinit var mock: LoggingContext<Logger, Loggable<Any>>
@@ -212,6 +211,7 @@ class LoggingCtxTests {
             logger.info("Test Waarde")
         }
     }
+
     @Test
     fun `log geeft juiste gegevens door aan logger bij onbekende waarde`() {
         every { loggable.getMessage() } returns "Test Waarde"
@@ -236,8 +236,5 @@ class LoggingCtxTests {
                 waarde.loggable === loggable
             }
         }
-
     }
-
-
 }

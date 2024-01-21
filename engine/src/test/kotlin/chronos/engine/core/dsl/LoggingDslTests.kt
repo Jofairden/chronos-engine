@@ -21,7 +21,6 @@ import org.springframework.test.context.junit4.SpringRunner
 @RunWith(SpringRunner::class)
 @ExtendWith(MockKExtension::class)
 class LoggingDslTests {
-
     @SpyK
     var logger: Logger = LoggerFactory.getLogger(LoggableTests::class.java)
 
@@ -44,8 +43,11 @@ class LoggingDslTests {
 
     @Test
     fun `loggable calls info`() {
-        val loggable = spyk(asLoggable(mock) {
-        })
+        val loggable =
+            spyk(
+                asLoggable(mock) {
+                },
+            )
         every { loggable.logger } returns logger
         verify(exactly = 1) { logger.info(any()) }
     }

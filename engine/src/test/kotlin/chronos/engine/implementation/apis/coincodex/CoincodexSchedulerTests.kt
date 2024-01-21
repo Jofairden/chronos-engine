@@ -12,7 +12,6 @@ import org.springframework.test.context.junit4.SpringRunner
 @ExtendWith(MockKExtension::class)
 @SpringBootTest
 internal class CoincodexSchedulerTest {
-
     @MockBean
     private lateinit var httpClientService: HTTPClientService
 
@@ -20,5 +19,4 @@ internal class CoincodexSchedulerTest {
     private lateinit var api: CoincodexApi
 
     private lateinit var underTest: CoincodexScheduler
-
 }

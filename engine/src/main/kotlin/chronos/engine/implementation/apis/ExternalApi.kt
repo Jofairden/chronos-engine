@@ -20,9 +20,8 @@ abstract class ExternalApi(
     override val name: String,
     override val baseUrl: String,
     override val httpClient: HTTPClientService,
-    open val gson: Gson
+    open val gson: Gson,
 ) : IExternalApi {
-
     /**
      * Retrieves a JSON response and parses it to the specified type using a TypeToken.
      *
@@ -43,7 +42,7 @@ abstract class ExternalApi(
      * @return The parsed JSON collection of objects of type T.
      */
     suspend inline fun <reified T> HttpResponse.getJsonCollection() =
-        getJsonWithTypeToken<Collection<T>>() {
+        getJsonWithTypeToken<Collection<T>> {
             object : TypeToken<Collection<T>>() {}.type
         }
 
@@ -52,6 +51,5 @@ abstract class ExternalApi(
      *
      * @return The parsed JSON object of type T.
      */
-    suspend inline fun <reified T> HttpResponse.getJson(): T =
-        gson.fromJson(bodyAsText(), T::class.java)
+    suspend inline fun <reified T> HttpResponse.getJson(): T = gson.fromJson(bodyAsText(), T::class.java)
 }

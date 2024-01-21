@@ -9,14 +9,15 @@ import org.springframework.context.event.ContextRefreshedEvent
 import org.springframework.stereotype.Service
 
 @Service
-class HTTPClientService @Autowired constructor(
-    val client: HttpClient
-) : ApplicationListener<ContextRefreshedEvent> {
-
-    @Override
-    override fun onApplicationEvent(event: ContextRefreshedEvent) {
-        asLoggable("[onApplicationEvent] HTTP Client Created") {
-            log(LogLevel.INFO)
+class HTTPClientService
+    @Autowired
+    constructor(
+        val client: HttpClient,
+    ) : ApplicationListener<ContextRefreshedEvent> {
+        @Override
+        override fun onApplicationEvent(event: ContextRefreshedEvent) {
+            asLoggable("[onApplicationEvent] HTTP Client Created") {
+                log(LogLevel.INFO)
+            }
         }
     }
-}

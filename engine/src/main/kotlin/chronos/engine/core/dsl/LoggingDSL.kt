@@ -4,7 +4,6 @@ import chronos.engine.implementation.logging.Loggable
 import chronos.engine.implementation.logging.LoggingContext
 import org.slf4j.Logger
 
-
 /**
  * Converts a value into a loggable object and applies a block of code to it.
  * Can be used to log any .toString()-able object, for example:
@@ -15,7 +14,7 @@ import org.slf4j.Logger
  */
 fun <B : Any> asLoggable(
     value: B,
-    block: LoggingContext<Logger, Loggable<B>>.() -> Unit
+    block: LoggingContext<Logger, Loggable<B>>.() -> Unit,
 ): Loggable<B> {
     val loggable = Loggable<B>(value)
     val ctx = LoggingContext.of(loggable)

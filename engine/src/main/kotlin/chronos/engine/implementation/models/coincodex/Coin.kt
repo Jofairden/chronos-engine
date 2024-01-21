@@ -112,5 +112,5 @@ data class Coin(
     @SerializedName("atl_data")
     val atlData: AtlData,
     val social: Social,
-    val socials: List<@Contextual Socials>
+    val socials: List<@Contextual Socials>,
 )

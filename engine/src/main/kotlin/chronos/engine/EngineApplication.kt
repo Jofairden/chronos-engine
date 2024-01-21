@@ -14,11 +14,11 @@ class EngineApplication {
         lateinit var ctx: ConfigurableApplicationContext
 
         @JvmStatic
-        fun main(args: Array<String>): Unit {
-            ctx = runApplication<EngineApplication>(*args) {
-                setBannerMode(Banner.Mode.OFF)
-            }
+        fun main(args: Array<String>) {
+            ctx =
+                runApplication<EngineApplication>(*args) {
+                    setBannerMode(Banner.Mode.OFF)
+                }
         }
     }
 }
-

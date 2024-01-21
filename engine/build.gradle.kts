@@ -1,18 +1,27 @@
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.HTML
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.SARIF
 
 sealed class versions(
-    private val version : String
+    private val version: String,
 ) {
     object Arrow : versions("1.2.0")
+
     object Slf4j : versions("2.0.11")
+
     object Logback : versions("1.4.14")
+
     object Mockk : versions("1.13.9")
+
     object Ktor : versions("2.3.7")
-    object Exposed : versions("0.46.0" )
-    object ReactiveStreams : versions("1.0.4" )
-    object KotlinxReactor : versions("1.7.3" )
+
+    object Exposed : versions("0.46.0")
+
+    object ReactiveStreams : versions("1.0.4")
+
+    object KotlinxReactor : versions("1.7.3")
 
     override fun toString(): String = version
 }
@@ -21,7 +30,8 @@ plugins {
     id("org.springframework.boot") version "3.2.1"
     id("io.spring.dependency-management") version "1.1.4"
     id("com.google.devtools.ksp") version "1.9.21-1.0.15"
-    id("io.gitlab.arturbosch.detekt") version "1.23.4"
+    id("io.gitlab.arturbosch.detekt") version "1.23.4" // ./gradlaw detekt
+    id("org.jlleitschuh.gradle.ktlint") version "12.1.0"
     kotlin("jvm") version "1.9.21"
     kotlin("plugin.spring") version "1.9.21"
 //    kotlin("plugin.serialization") version "1.7.3"
@@ -47,7 +57,7 @@ dependencies {
 //    KOTLIN
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 //    ARROW
-    implementation("io.arrow-kt:arrow-core:${versions.Arrow}" )
+    implementation("io.arrow-kt:arrow-core:${versions.Arrow}")
     implementation("io.arrow-kt:arrow-fx-coroutines:${versions.Arrow}")
     implementation("io.arrow-kt:arrow-optics:${versions.Arrow}")
 //    SLF4J
@@ -103,13 +113,22 @@ detekt {
 tasks.withType<Detekt>().configureEach {
     reports {
         html.required.set(true) // observe findings in your browser with structure and code snippets
-        xml.required.set(true) // checkstyle like format mainly for integrations like Jenkins
-        txt.required.set(true) // similar to the console output, contains issue signature to manually edit baseline files
-        sarif.required.set(true) // standardized SARIF format (https://sarifweb.azurewebsites.net/) to support integrations with GitHub Code Scanning
-        md.required.set(true) // simple Markdown format
+        sarif.required.set(
+            true,
+        ) // standardized SARIF format (https://sarifweb.azurewebsites.net/) to support integrations with GitHub Code Scanning
     }
 }
-// Kotlin DSL
+
+ktlint {
+    verbose.set(true)
+    outputToConsole.set(true)
+    coloredOutput.set(true)
+    reporters {
+        reporter(HTML)
+        reporter(SARIF)
+    }
+}
+
 tasks.withType<Detekt>().configureEach {
     jvmTarget = "21"
 }

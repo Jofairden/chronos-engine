@@ -7,5 +7,5 @@ data class Socials(
     val value: String,
     val label: String,
     @SerializedName("coincodex_socials_id")
-    val coincodexSocialsId: Int
+    val coincodexSocialsId: Int,
 )

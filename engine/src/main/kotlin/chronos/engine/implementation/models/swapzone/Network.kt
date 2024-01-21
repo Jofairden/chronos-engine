@@ -14,7 +14,7 @@ data class NetworkObject(
     @SerializedName("network")
     val network: String,
     @SerializedName("smartContract")
-    val smartContract: String
+    val smartContract: String,
 )
 
 @JvmInline

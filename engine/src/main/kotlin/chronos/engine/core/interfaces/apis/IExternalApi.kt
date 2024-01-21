@@ -14,6 +14,7 @@ interface IExternalApi {
     val name: String
     val baseUrl: String
     val httpClient: HTTPClientService
+
     /**
      * Executes an HTTP request inside the external API.
      * This method is a suspend function, allowing it to be used within a coroutine.
@@ -24,5 +25,5 @@ interface IExternalApi {
      *
      * @return The HTTP response object representing the response from the API request.
      */
-    suspend fun IExternalApiRequest.execute(block: suspend HttpResponse.() -> Unit) : HttpResponse
+    suspend fun IExternalApiRequest.execute(block: suspend HttpResponse.() -> Unit): HttpResponse
 }

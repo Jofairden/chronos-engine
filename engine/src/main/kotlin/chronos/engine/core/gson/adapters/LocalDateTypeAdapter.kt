@@ -7,7 +7,6 @@ import java.time.format.DateTimeFormatter
 import java.time.temporal.TemporalAccessor
 import java.time.temporal.TemporalQuery
 
-
 /**
  * GSON serialiser/deserialiser for converting [LocalDate] objects.
  */
@@ -28,7 +27,11 @@ class LocalDateTypeAdapter : JsonSerializer<LocalDate?>, JsonDeserializer<LocalD
      * @param typeOfSrc the actual type (fully genericized version) of the source object.
      * @return a JsonElement corresponding to the specified object.
      */
-    override fun serialize(src: LocalDate?, typeOfSrc: Type?, context: JsonSerializationContext?): JsonElement {
+    override fun serialize(
+        src: LocalDate?,
+        typeOfSrc: Type?,
+        context: JsonSerializationContext?,
+    ): JsonElement {
         return JsonPrimitive(FORMATTER.format(src))
     }
 
@@ -50,9 +53,15 @@ class LocalDateTypeAdapter : JsonSerializer<LocalDate?>, JsonDeserializer<LocalD
      * @throws JsonParseException if json is not in the expected format of `typeOfT`
      */
     @Throws(JsonParseException::class)
-    override fun deserialize(json: JsonElement, typeOfT: Type?, context: JsonDeserializationContext?): LocalDate {
-        return FORMATTER.parse(json.asString,
-            TemporalQuery { temporal: TemporalAccessor? -> LocalDate.from(temporal) })
+    override fun deserialize(
+        json: JsonElement,
+        typeOfT: Type?,
+        context: JsonDeserializationContext?,
+    ): LocalDate {
+        return FORMATTER.parse(
+            json.asString,
+            TemporalQuery { temporal: TemporalAccessor? -> LocalDate.from(temporal) },
+        )
     }
 
     companion object {

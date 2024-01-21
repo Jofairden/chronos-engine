@@ -11,18 +11,26 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api/v1/swapzone/networks")
-class SwapzoneController @Autowired constructor(
-    private val service: SwapzoneService
-) {
-    @GetMapping("/{id}")
-    fun findById(@PathVariable id: Long): ResponseEntity<NetworkObject> = service.findById(NetworkId(id))?.let {
-        ResponseEntity.ok(it)
-    } ?: ResponseEntity.notFound().build()
+class SwapzoneController
+    @Autowired
+    constructor(
+        private val service: SwapzoneService,
+    ) {
+        @GetMapping("/{id}")
+        fun findById(
+            @PathVariable id: Long,
+        ): ResponseEntity<NetworkObject> =
+            service.findById(NetworkId(id))?.let {
+                ResponseEntity.ok(it)
+            } ?: ResponseEntity.notFound().build()
 
-    @GetMapping("/all")
-    suspend fun getAll(): ResponseEntity<List<NetworkObject>> {
-        val list = service.getAll()
-        return if (list.isEmpty()) ResponseEntity.notFound().build()
-        else ResponseEntity.ok(list)
+        @GetMapping("/all")
+        suspend fun getAll(): ResponseEntity<List<NetworkObject>> {
+            val list = service.getAll()
+            return if (list.isEmpty()) {
+                ResponseEntity.notFound().build()
+            } else {
+                ResponseEntity.ok(list)
+            }
+        }
     }
-}

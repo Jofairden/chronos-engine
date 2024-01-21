@@ -14,5 +14,5 @@ data class InitialData(
     @SerializedName("price_btc")
     val priceBtc: Double,
     @SerializedName("price_eth")
-    val priceEth: Double
+    val priceEth: Double,
 )

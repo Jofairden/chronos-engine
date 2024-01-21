@@ -14,35 +14,38 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 
 @Service
-class SwapzoneApi @Autowired constructor(
-    override val httpClient: HTTPClientService,
-    override val gson : Gson,
-    @Value("\${swapzone.api.baseurl}")
-    var baseURL: String
-) : ExternalApi(
-    name = "Swapzone",
-    baseUrl = baseURL,
-    httpClient = httpClient,
-    gson = gson
-), IExternalApiAuthenticator {
+class SwapzoneApi
+    @Autowired
+    constructor(
+        override val httpClient: HTTPClientService,
+        override val gson: Gson,
+        @Value("\${swapzone.api.baseurl}")
+        var baseURL: String,
+    ) : ExternalApi(
+            name = "Swapzone",
+            baseUrl = baseURL,
+            httpClient = httpClient,
+            gson = gson,
+        ),
+        IExternalApiAuthenticator {
+        @Value("\${swapzone.api.key}")
+        lateinit var apiKey: String
 
-    @Value("\${swapzone.api.key}")
-    lateinit var apiKey: String
+        override fun HttpRequestBuilder.authenticate(): Unit =
+            run {
+                headers {
+                    append("x-api-key", apiKey)
+                }
+            }
 
-    override fun HttpRequestBuilder.authenticate(): Unit = run {
-        headers {
-            append("x-api-key", apiKey)
+        override suspend fun IExternalApiRequest.execute(block: suspend HttpResponse.() -> Unit): HttpResponse {
+            return httpClient.client.get(
+                api.baseUrl + endpoint,
+            ) {
+                authenticate()
+            }.let {
+                it.block()
+                it
+            }
         }
     }
-
-    override suspend fun IExternalApiRequest.execute(block: suspend HttpResponse.() -> Unit) : HttpResponse {
-        return httpClient.client.get(
-            api.baseUrl + endpoint
-        ) {
-            authenticate()
-        }.let {
-            it.block()
-            it
-        }
-    }
-}

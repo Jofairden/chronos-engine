@@ -15,9 +15,9 @@ object Reflection {
             if (ste.className.indexOf("java.lang.Thread") != 0) {
                 if (callerClassName == null) {
                     callerClassName = ste.className
-                } else if (callerClassName != ste.className
-                    && ste.className != "chronos.engine.implementation.logging.Loggable"
-                    && !ste.className.startsWith("chronos.engine.core.dsl.LoggingDSLKt")
+                } else if (callerClassName != ste.className &&
+                    ste.className != "chronos.engine.implementation.logging.Loggable" &&
+                    !ste.className.startsWith("chronos.engine.core.dsl.LoggingDSLKt")
                 ) {
                     callerClassName = ste.className
                     break

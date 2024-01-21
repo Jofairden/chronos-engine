@@ -21,5 +21,5 @@ data class AtlData(
     val atlEth: Double,
     @SerializedName("atl_eth_date")
     @Contextual
-    val atlEthDate: LocalDateTime
+    val atlEthDate: LocalDateTime,
 )

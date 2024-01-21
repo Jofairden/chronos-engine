@@ -35,67 +35,69 @@ import java.time.LocalDateTime
  */
 @Configuration
 class HttpClientConfiguration {
-
     @Bean
     fun gson(): Gson = Gson().newBuilder().buildGson().create()
 
-    fun GsonBuilder.buildGson(): GsonBuilder = with(this) {
-        serializeNulls()
-        setLenient()
-        setDateFormat("yyyy-MM-dd HH:mm:ss")
-        setPrettyPrinting()
-        registerTypeAdapter(LocalDateTime::class.java, LocalDateTimeTypeAdapter())
-        registerTypeAdapter(LocalDate::class.java, LocalDateTypeAdapter())
-        setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-    }
+    fun GsonBuilder.buildGson(): GsonBuilder =
+        with(this) {
+            serializeNulls()
+            setLenient()
+            setDateFormat("yyyy-MM-dd HH:mm:ss")
+            setPrettyPrinting()
+            registerTypeAdapter(LocalDateTime::class.java, LocalDateTimeTypeAdapter())
+            registerTypeAdapter(LocalDate::class.java, LocalDateTypeAdapter())
+            setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+        }
 
     @Bean
-    fun httpClient() = HttpClient(OkHttp) {
-        engine {
-            config {
-                followRedirects(true)
+    fun httpClient() =
+        HttpClient(OkHttp) {
+            engine {
+                config {
+                    followRedirects(true)
+                }
             }
-        }
-        with(this@HttpClient) {
-            install(Logging) {
-                logger = object : Logger {
-                    override fun log(message: String) {
-                        asLoggable(message) { info() }
+            with(this@HttpClient) {
+                install(Logging) {
+                    logger =
+                        object : Logger {
+                            override fun log(message: String) {
+                                asLoggable(message) { info() }
+                            }
+                        }
+                    level = LogLevel.NONE
+                    sanitizeHeader { header ->
+                        header == HttpHeaders.Authorization
                     }
                 }
-                level = LogLevel.NONE
-                sanitizeHeader { header ->
-                    header == HttpHeaders.Authorization
+                install(ContentNegotiation) {
+                    gson {
+                        buildGson()
+                    }
                 }
-            }
-            install(ContentNegotiation) {
-                gson {
-                    buildGson()
+                install(ContentEncoding) {
+                    deflate(1.0F)
+                    gzip(0.9F)
                 }
-            }
-            install(ContentEncoding) {
-                deflate(1.0F)
-                gzip(0.9F)
-            }
-            install(UserAgent) {
-                agent = "Chronos Engine"
-            }
-            install(HttpRequestRetry) {
-                maxRetries = 3
-                retryIf { request, response ->
-                    !response.status.isSuccess()
+                install(UserAgent) {
+                    agent = "Chronos Engine"
                 }
-                retryOnExceptionIf { request, cause ->
-                    cause is RedirectResponseException
+                install(HttpRequestRetry) {
+                    maxRetries = 3
+                    retryIf { request, response ->
+                        !response.status.isSuccess()
+                    }
+                    retryOnExceptionIf { request, cause ->
+                        cause is RedirectResponseException
+                    }
+                    delayMillis { retry ->
+                        retry * 3000L
+                    } // retries in 3, 6, 9, etc. seconds
                 }
-                delayMillis { retry ->
-                    retry * 3000L
-                } // retries in 3, 6, 9, etc. seconds
-            }
-            install(HttpCache) {
-                val cacheFile = Files.createDirectories(Paths.get("build/cache")).toFile()
-                publicStorage(FileStorage(cacheFile))
+                install(HttpCache) {
+                    val cacheFile = Files.createDirectories(Paths.get("build/cache")).toFile()
+                    publicStorage(FileStorage(cacheFile))
+                }
             }
         }
-    }
 }
