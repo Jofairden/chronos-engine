@@ -5,7 +5,6 @@ import java.lang.reflect.Type
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.TemporalAccessor
-import java.time.temporal.TemporalQuery
 
 
 /**
@@ -54,10 +53,10 @@ class LocalDateTimeTypeAdapter : JsonSerializer<LocalDateTime>, JsonDeserializer
      */
     @Throws(JsonParseException::class)
     override fun deserialize(json: JsonElement, typeOfT: Type?, context: JsonDeserializationContext?): LocalDateTime {
-        return formatter.parse(json.asString, TemporalQuery { temporal: TemporalAccessor? ->
+        return formatter.parse(json.asString) { temporal: TemporalAccessor? ->
             LocalDateTime.from(
                 temporal
             )
-        })
+        }
     }
 }

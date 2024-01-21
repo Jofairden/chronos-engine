@@ -4,7 +4,6 @@ import chronos.engine.core.dsl.asLoggable
 import chronos.engine.core.services.SchedulerService
 import chronos.engine.implementation.apis.swapzone.requests.exchange.CurrenciesRequest
 import chronos.engine.implementation.models.swapzone.NetworkObject
-import chronos.engine.implementation.services.HTTPClientService
 import jakarta.annotation.PostConstruct
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service
 
 @Service
 class SwapzoneScheduler @Autowired constructor(
-    val httpClientService: HTTPClientService,
     val api: SwapzoneApi,
     val swapZone: SwapzoneService
 ) : SchedulerService(CoroutineScope(Dispatchers.IO)) {
@@ -49,7 +47,7 @@ class SwapzoneScheduler @Autowired constructor(
                                     it.name,
                                     it.ticker,
                                     it.network,
-                                    it.smartContract ?: ""
+                                    it.smartContract
                                 )
                             )
                             asLoggable("Adding new NetworkEntity with id: ${id}") {
