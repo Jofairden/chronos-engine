@@ -21,13 +21,14 @@ import io.ktor.client.plugins.logging.Logging
 import io.ktor.http.HttpHeaders
 import io.ktor.http.isSuccess
 import io.ktor.serialization.gson.gson
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.time.LocalDate
 import java.time.LocalDateTime
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 
+@Suppress("detekt.style.MagicNumber")
 /**
  * Configuration class for HttpClient.
  * This class configures the HttpClient with various components and settings such as gson and logging

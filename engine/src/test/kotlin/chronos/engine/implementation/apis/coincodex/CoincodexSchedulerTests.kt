@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner
 @RunWith(SpringRunner::class)
 @ExtendWith(MockKExtension::class)
 @SpringBootTest
-internal class CoincodexSchedulerTest {
+internal class CoincodexSchedulerTests {
     @MockBean
     private lateinit var httpClientService: HTTPClientService
 
