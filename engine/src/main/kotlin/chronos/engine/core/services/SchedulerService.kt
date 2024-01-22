@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
-@Suppress("detekt.style.UnnecessaryAbstractClass")
+@Suppress("UnnecessaryAbstractClass")
 /**
  * A service for scheduling tasks to be executed asynchronously.
  *

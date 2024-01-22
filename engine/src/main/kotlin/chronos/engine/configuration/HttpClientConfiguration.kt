@@ -28,7 +28,7 @@ import java.time.LocalDateTime
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
-@Suppress("detekt.style.MagicNumber")
+@Suppress("MagicNumber")
 /**
  * Configuration class for HttpClient.
  * This class configures the HttpClient with various components and settings such as gson and logging

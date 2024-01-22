@@ -3,7 +3,7 @@ package chronos.engine.implementation.models.coincodex
 import kotlinx.serialization.Serializable
 
 @Serializable
-@Suppress("detekt.naming.ConstructorParameterNaming")
+@Suppress("ConstructorParameterNaming")
 data class Social(
     val Bitcointalk: String,
     val Explorer: String,
