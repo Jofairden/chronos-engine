@@ -1,19 +1,20 @@
 package chronos.engine.core.interfaces.apis
 
-import chronos.engine.implementation.services.HTTPClientService
+import com.google.gson.Gson
+import io.ktor.client.HttpClient
 import io.ktor.client.statement.HttpResponse
 
 /**
  * Represents an external API.
  *
  * @property name The name of the external API.
- * @property baseUrl The base URL of the external API.
- * @property httpClient The HTTP client service used to make HTTP requests.
+ * @property gson GSON instance for this API
+ * @property client HTTP Client for this API
  */
 interface IExternalApi {
     val name: String
-    val baseUrl: String
-    val httpClient: HTTPClientService
+    val gson: Gson
+    val client: HttpClient
 
     /**
      * Executes an HTTP request inside the external API.

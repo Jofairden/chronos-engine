@@ -13,12 +13,9 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.junit.runner.RunWith
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.test.context.junit4.SpringRunner
 
-@RunWith(SpringRunner::class)
 @ExtendWith(MockKExtension::class)
 class LoggingDslTests {
     @SpyK
@@ -45,11 +42,12 @@ class LoggingDslTests {
     fun `loggable calls info`() {
         val loggable =
             spyk(
-                asLoggable(mock) {
-                },
+                asLoggable("Test") {},
             )
         every { loggable.logger } returns logger
-        verify(exactly = 1) { logger.info(any()) }
+        every { loggable.info() } answers { callOriginal() }
+        loggable.info()
+        verify(exactly = 1) { logger.info("Test") }
     }
 
     @Test

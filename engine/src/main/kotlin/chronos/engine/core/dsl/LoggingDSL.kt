@@ -16,7 +16,7 @@ fun <B : Any> asLoggable(
     value: B,
     block: LoggingContext<Logger, Loggable<B>>.() -> Unit,
 ): Loggable<B> {
-    val loggable = Loggable<B>(value)
+    val loggable = Loggable(value)
     val ctx = LoggingContext.of(loggable)
     return ctx.apply { this.block() }.let { loggable }
 }

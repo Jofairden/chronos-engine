@@ -11,12 +11,16 @@ import java.lang.reflect.Type
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.TemporalAccessor
-import java.time.temporal.TemporalQuery
 
 /**
  * GSON serialiser/deserialiser for converting [LocalDate] objects.
  */
-class LocalDateTypeAdapter : JsonSerializer<LocalDate?>, JsonDeserializer<LocalDate?> {
+class LocalDateTypeAdapter : JsonSerializer<LocalDate>, JsonDeserializer<LocalDate> {
+    companion object {
+        /** Formatter.  */
+        private val Formatter: DateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE
+    }
+
     /**
      * Gson invokes this call-back method during serialization when it encounters a field of the
      * specified type.
@@ -34,11 +38,11 @@ class LocalDateTypeAdapter : JsonSerializer<LocalDate?>, JsonDeserializer<LocalD
      * @return a JsonElement corresponding to the specified object.
      */
     override fun serialize(
-        src: LocalDate?,
-        typeOfSrc: Type?,
-        context: JsonSerializationContext?,
+        src: LocalDate,
+        typeOfSrc: Type,
+        context: JsonSerializationContext,
     ): JsonElement {
-        return JsonPrimitive(FORMATTER.format(src))
+        return JsonPrimitive(Formatter.format(src))
     }
 
     /**
@@ -61,17 +65,11 @@ class LocalDateTypeAdapter : JsonSerializer<LocalDate?>, JsonDeserializer<LocalD
     @Throws(JsonParseException::class)
     override fun deserialize(
         json: JsonElement,
-        typeOfT: Type?,
-        context: JsonDeserializationContext?,
+        typeOfT: Type,
+        context: JsonDeserializationContext,
     ): LocalDate {
-        return FORMATTER.parse(
+        return Formatter.parse(
             json.asString,
-            TemporalQuery { temporal: TemporalAccessor? -> LocalDate.from(temporal) },
-        )
-    }
-
-    companion object {
-        /** Formatter.  */
-        private val FORMATTER: DateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE
+        ) { temporal: TemporalAccessor? -> LocalDate.from(temporal) }
     }
 }

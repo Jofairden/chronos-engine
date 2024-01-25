@@ -1,7 +1,7 @@
-package chronos.engine.implementation.apis.coincodex.requests
+package chronos.engine.implementation.api.coincodex.request
 
 import chronos.engine.core.interfaces.apis.IExternalApiRequest
-import chronos.engine.implementation.apis.coincodex.CoincodexApi
+import chronos.engine.implementation.api.coincodex.CoincodexApi
 
 class GetCoinRequest(
     val coin: String,

@@ -25,13 +25,13 @@
     <ID>NewLineAtEndOfFile:AthData.kt$chronos.engine.implementation.models.coincodex.AthData.kt</ID>
     <ID>NewLineAtEndOfFile:AtlData.kt$chronos.engine.implementation.models.coincodex.AtlData.kt</ID>
     <ID>NewLineAtEndOfFile:Coin.kt$chronos.engine.implementation.models.coincodex.Coin.kt</ID>
-    <ID>NewLineAtEndOfFile:CoincodexApi.kt$chronos.engine.implementation.apis.coincodex.CoincodexApi.kt</ID>
-    <ID>NewLineAtEndOfFile:CoincodexScheduler.kt$chronos.engine.implementation.apis.coincodex.CoincodexScheduler.kt</ID>
-    <ID>NewLineAtEndOfFile:CurrenciesRequest.kt$chronos.engine.implementation.apis.swapzone.requests.exchange.CurrenciesRequest.kt</ID>
-    <ID>NewLineAtEndOfFile:ExternalApi.kt$chronos.engine.implementation.apis.ExternalApi.kt</ID>
-    <ID>NewLineAtEndOfFile:GetCoinRequest.kt$chronos.engine.implementation.apis.coincodex.requests.GetCoinRequest.kt</ID>
+    <ID>NewLineAtEndOfFile:CoincodexApi.kt$chronos.engine.implementation.api.coincodex.CoincodexApi.kt</ID>
+    <ID>NewLineAtEndOfFile:CoincodexScheduler.kt$chronos.engine.implementation.api.coincodex.CoincodexScheduler.kt</ID>
+    <ID>NewLineAtEndOfFile:CurrenciesRequest.kt$chronos.engine.implementation.api.swapzone.requests.exchange.CurrenciesRequest.kt</ID>
+    <ID>NewLineAtEndOfFile:ExternalApi.kt$chronos.engine.implementation.api.ExternalApi.kt</ID>
+    <ID>NewLineAtEndOfFile:GetCoinRequest.kt$chronos.engine.implementation.api.coincodex.request.GetCoinRequest.kt</ID>
     <ID>NewLineAtEndOfFile:HTTPClientService.kt$chronos.engine.implementation.services.HTTPClientService.kt</ID>
-    <ID>NewLineAtEndOfFile:HttpClientConfiguration.kt$chronos.engine.configuration.HttpClientConfiguration.kt</ID>
+    <ID>NewLineAtEndOfFile:HttpClientConfiguration.kt$chronos.engine.modules.HttpClientConfiguration.kt</ID>
     <ID>NewLineAtEndOfFile:IExternalApi.kt$chronos.engine.core.interfaces.apis.IExternalApi.kt</ID>
     <ID>NewLineAtEndOfFile:IExternalApiAuthenticator.kt$chronos.engine.core.interfaces.apis.IExternalApiAuthenticator.kt</ID>
     <ID>NewLineAtEndOfFile:IExternalApiRequest.kt$chronos.engine.core.interfaces.apis.IExternalApiRequest.kt</ID>
@@ -48,13 +48,13 @@
     <ID>NewLineAtEndOfFile:NetworkEntity.kt$chronos.engine.implementation.models.swapzone.db.NetworkEntity.kt</ID>
     <ID>NewLineAtEndOfFile:Reflection.kt$chronos.engine.util.Reflection.kt</ID>
     <ID>NewLineAtEndOfFile:SchedulerService.kt$chronos.engine.core.services.SchedulerService.kt</ID>
-    <ID>NewLineAtEndOfFile:SchemaConfiguration.kt$chronos.engine.configuration.SchemaConfiguration.kt</ID>
+    <ID>NewLineAtEndOfFile:SchemaConfiguration.kt$chronos.engine.modules.SchemaConfiguration.kt</ID>
     <ID>NewLineAtEndOfFile:Social.kt$chronos.engine.implementation.models.coincodex.Social.kt</ID>
     <ID>NewLineAtEndOfFile:Socials.kt$chronos.engine.implementation.models.coincodex.Socials.kt</ID>
-    <ID>NewLineAtEndOfFile:SwapzoneApi.kt$chronos.engine.implementation.apis.swapzone.SwapzoneApi.kt</ID>
-    <ID>NewLineAtEndOfFile:SwapzoneController.kt$chronos.engine.implementation.apis.swapzone.SwapzoneController.kt</ID>
-    <ID>NewLineAtEndOfFile:SwapzoneScheduler.kt$chronos.engine.implementation.apis.swapzone.SwapzoneScheduler.kt</ID>
-    <ID>NewLineAtEndOfFile:SwapzoneService.kt$chronos.engine.implementation.apis.swapzone.SwapzoneService.kt</ID>
+    <ID>NewLineAtEndOfFile:SwapzoneApi.kt$chronos.engine.implementation.api.swapzone.SwapzoneApi.kt</ID>
+    <ID>NewLineAtEndOfFile:SwapzoneController.kt$chronos.engine.implementation.api.swapzone.SwapzoneController.kt</ID>
+    <ID>NewLineAtEndOfFile:SwapzoneScheduler.kt$chronos.engine.implementation.api.swapzone.SwapzoneScheduler.kt</ID>
+    <ID>NewLineAtEndOfFile:SwapzoneService.kt$chronos.engine.implementation.api.swapzone.SwapzoneService.kt</ID>
     <ID>SpreadOperator:EngineApplication.kt$EngineApplication.Companion$(*args)</ID>
     <ID>TooGenericExceptionCaught:CoincodexScheduler.kt$CoincodexScheduler$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:SwapzoneScheduler.kt$SwapzoneScheduler$ex: Exception</ID>

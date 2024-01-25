@@ -1,27 +1,23 @@
-package chronos.engine.implementation.apis
+package chronos.engine.implementation.api
 
 import chronos.engine.core.interfaces.apis.IExternalApi
-import chronos.engine.implementation.services.HTTPClientService
+import chronos.engine.core.interfaces.apis.IExternalApiRequest
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import io.ktor.client.HttpClient
+import io.ktor.client.request.get
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
 import java.lang.reflect.Type
 
 /**
- * Represents an abstract External API.
- *
- * @property name The name of the External API.
- * @property baseUrl The base URL of the External API.
- * @property httpClient The HTTP client service used to make HTTP requests.
- * @property gson The Gson instance used for JSON parsing.
+ * Represents an abstract class for an external API.
  */
-abstract class ExternalApi(
-    override val name: String,
-    override val baseUrl: String,
-    override val httpClient: HTTPClientService,
-    open val gson: Gson,
-) : IExternalApi {
+abstract class ExternalApi : IExternalApi {
+    abstract override val name: String
+    abstract override val gson: Gson
+    abstract override val client: HttpClient
+
     /**
      * Retrieves a JSON response and parses it to the specified type using a TypeToken.
      *
@@ -51,5 +47,21 @@ abstract class ExternalApi(
      *
      * @return The parsed JSON object of type T.
      */
-    suspend inline fun <reified T> HttpResponse.getJson(): T = gson.fromJson(bodyAsText(), T::class.java)
+    suspend inline fun <reified T : Any> HttpResponse.getJson(): T = gson.fromJson(bodyAsText(), T::class.java)
+
+    /**
+     * Executes an HTTP request inside the external API.
+     *
+     * @param block A lambda function that defines the behavior to be performed on the HTTP response.
+     *              The lambda function is invoked with the `HttpResponse` object as the receiver,
+     *              allowing direct access to the response properties and methods.
+     *
+     * @return The HTTP response object representing the response from the API request.
+     */
+    override suspend fun IExternalApiRequest.execute(block: suspend HttpResponse.() -> Unit): HttpResponse {
+        return client.get(endpoint).let {
+            it.block()
+            it
+        }
+    }
 }

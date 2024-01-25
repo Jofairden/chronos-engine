@@ -36,7 +36,7 @@ class LocalDateTimeTypeAdapter : JsonSerializer<LocalDateTime>, JsonDeserializer
      * @return a JsonElement corresponding to the specified object.
      */
     override fun serialize(
-        src: LocalDateTime?,
+        src: LocalDateTime,
         typeOfSrc: Type?,
         context: JsonSerializationContext?,
     ): JsonElement {

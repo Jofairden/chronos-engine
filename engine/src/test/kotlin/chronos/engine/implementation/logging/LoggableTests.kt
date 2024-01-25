@@ -9,13 +9,10 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.junit.runner.RunWith
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.test.context.junit4.SpringRunner
 import kotlin.test.assertEquals
 
-@RunWith(SpringRunner::class)
 @ExtendWith(MockKExtension::class)
 class LoggableTests {
     @SpyK

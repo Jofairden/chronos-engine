@@ -11,15 +11,15 @@ data class AthData(
     val athUsd: Double,
     @SerializedName("ath_usd_date")
     @Contextual
-    val athUsdDate: LocalDateTime,
+    val athUsdDate: LocalDateTime?,
     @SerializedName("ath_btc")
     val athBtc: Double,
     @SerializedName("ath_btc_date")
     @Contextual
-    val athBtcDate: LocalDateTime,
+    val athBtcDate: LocalDateTime?,
     @SerializedName("ath_eth")
     val athEth: Double,
     @SerializedName("ath_eth_date")
     @Contextual
-    val athEthDate: LocalDateTime,
+    val athEthDate: LocalDateTime?,
 )

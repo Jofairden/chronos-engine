@@ -1,7 +1,7 @@
-package chronos.engine.implementation.apis.swapzone.requests.exchange
+package chronos.engine.implementation.api.swapzone.request.exchange
 
 import chronos.engine.core.interfaces.apis.IExternalApiRequest
-import chronos.engine.implementation.apis.swapzone.SwapzoneApi
+import chronos.engine.implementation.api.swapzone.SwapzoneApi
 
 /**
  * Represents a request for retrieving currencies from the Swapzone API.
