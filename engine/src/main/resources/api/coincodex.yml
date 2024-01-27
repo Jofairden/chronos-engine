@@ -1,0 +1,349 @@
+openapi: 3.0.0
+info:
+  title: CoinCodex API
+  description: "The API is in beta and is subject to change. License: The API is free to use under the Attribution-NonCommercial 3.0 Unported (CC BY-NC 3.0) license. CoinCodex is to be credited if the API is used in your services."
+  version: Beta v0.2
+servers:
+  - url: https://coincodex.com/api
+paths:
+  /coincodex/get_firstpage_history/{days}/{samples}/{coins_limit}:
+    get:
+      summary: Firstpage History
+      description: "Returns historic data for coins needed to draw the graph on the frontpage."
+      parameters:
+        - name: days
+          in: path
+          description: "number of days we need the history fo"
+          required: true
+          schema:
+            type: integer
+        - name: samples
+          in: path
+          description: "how many samples (approximately) must be returned for each coin"
+          required: true
+          schema:
+            type: integer
+        - name: coins_limit
+          in: path
+          description: "for how many top coins (by market cap) must be returned"
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: "Object with our unique internal id for the coin as key and an array of arrays containing timestamp and coin price in usd"
+  /coincodex/get_coin/{symbol}:
+    get:
+      summary: Get Coin
+      description: "Returns all properties for the coin needet to display the coin details page"
+      parameters:
+        - name: symbol
+          in: path
+          description: "our unique internal id for the coin"
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: "Object containing coin details"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Coin"
+  /coincodex/get_coin_history/{symbol}/{start_date}/{end_date}/{samples}:
+    get:
+      summary: Get Coin History
+      description: "Returns historic price data for a single coin."
+      parameters:
+        - name: symbol
+          in: path
+          description: "our unique internal id for the coin"
+          required: true
+          schema:
+            type: string
+        - name: start_date
+          in: path
+          description: "YYYY-MM-DD format of start date in range"
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: end_date
+          in: path
+          description: "YYYY-MM-DD format of end date in range"
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: samples
+          in: path
+          description: "how many samples (approximately) must be returned for each coin"
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: "Object with historic price data for a single coin"
+  /exchange/get_markets_by_coin/{symbol}/:
+    get:
+      summary: Get Coin Markets
+      description: "Returns exchanges and markets for a coin."
+      parameters:
+        - name: symbol
+          in: path
+          description: "our unique internal id for the coin"
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: "Array of objects with exchange and market details for a coin"
+  /coincodex/get_coin_ranges/{comma_separated_list_of_symbols}/:
+    get:
+      summary: Coin Ranges
+      description: "Returns the range info for the list of coins."
+      parameters:
+        - name: comma_separated_list_of_symbols
+          in: path
+          description: "comma separated list of our unique internal ids for the coin"
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: "Object that returns the range info for a list of coins id"
+components:
+  schemas:
+    Socials:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Github"
+        value:
+          type: string
+          example: "username"
+        label:
+          type: string
+          example: "User's Label"
+        coincodex_socials_id:
+          type: integer
+          example: 123456
+    Social:
+      type: object
+      properties:
+        Bitcointalk:
+          type: string
+        Explorer:
+          type: string
+        Explorer1:
+          type: string
+        Explorer2:
+          type: string
+        Explorer3:
+          type: string
+        Reddit:
+          type: string
+      required:
+        - Bitcointalk
+        - Explorer
+        - Explorer1
+        - Explorer2
+        - Explorer3
+        - Reddit
+    AtlData:
+      type: object
+      properties:
+        atl_usd:
+          type: number
+          format: double
+          description: "The all-time-low price in USD."
+        atl_usd_date:
+          type: string
+          format: date-time
+          description: "The date and time of the all-time-low price in USD."
+        atl_btc:
+          type: number
+          format: double
+          description: "The all-time-low price in BTC"
+        atl_btc_date:
+          type: string
+          format: date-time
+          description: "The date and time of the all-time-low price in BTC."
+        atl_eth:
+          type: number
+          format: double
+          description: "The all-time-low price in ETH."
+        atl_eth_date:
+          type: string
+          format: date-time
+          description: "The date and time of the all-time-low price in ETH."
+    AthData:
+      type: object
+      properties:
+        ath_usd:
+          type: number
+          format: double
+        ath_usd_date:
+          type: string
+          format: date-time
+        ath_btc:
+          type: number
+          format: double
+        ath_btc_date:
+          type: string
+          format: date-time
+        ath_eth:
+          type: number
+          format: double
+        ath_eth_date:
+          type: string
+          format: date-time
+    InitialData:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date-time
+        price_usd:
+          type: number
+          format: double
+        price_btc:
+          type: number
+          format: double
+        price_eth:
+          type: number
+          format: double
+    Coin:
+      type: object
+      properties:
+        symbol:
+          type: string
+        coin_name:
+          type: string
+        shortname:
+          type: string
+        slug:
+          type: string
+        display_symbol:
+          type: string
+        display:
+          type: string
+        release_date:
+          type: string
+        ico_price:
+          type: number
+          format: double
+        today_open:
+          type: integer
+        market_cap_rank:
+          type: integer
+        volume_rank:
+          type: integer
+        price_high_24_usd:
+          type: number
+          format: double
+        price_low_24_usd:
+          type: number
+          format: double
+        message:
+          type: string
+        website:
+          type: string
+        whitepaper:
+          type: string
+        total_supply:
+          type: string
+        supply:
+          type: number
+          format: double
+        platform:
+          type: string
+        how_to_buy_url:
+          type: string
+        last_price_usd:
+          type: number
+          format: double
+        price_change_1H_percent:
+          type: number
+          format: double
+        price_change_1D_percent:
+          type: number
+          format: double
+        price_change_7D_percent:
+          type: number
+          format: double
+        price_change_30D_percent:
+          type: number
+          format: double
+        price_change_90D_percent:
+          type: number
+          format: double
+        price_change_180D_percent:
+          type: number
+          format: double
+        price_change_365D_percent:
+          type: number
+          format: double
+        price_change_3Y_percent:
+          type: number
+          format: double
+        price_change_5Y_percent:
+          type: number
+          format: double
+        price_change_ALL_percent:
+          type: number
+          format: double
+        price_change_YTD_percent:
+          type: number
+          format: double
+        volume_24_usd:
+          type: number
+          format: double
+        trading_since:
+          type: string
+        stages_start:
+          type: string
+        stages_end:
+          type: string
+        include_supply:
+          type: boolean
+        use_volume:
+          type: boolean
+        ath_usd:
+          type: number
+          format: double
+        ath_date:
+          type: string
+        not_trading_since:
+          type: string
+        last_update:
+          type: string
+        cycle_low_usd:
+          type: number
+          format: double
+        cycle_high_usd:
+          type: number
+          format: double
+        cycle_low_date:
+          type: string
+        cycle_high_date:
+          type: string
+        image_id:
+          type: string
+        image_t:
+          type: string
+        total_total_supply:
+          type: string
+        initial_data:
+          $ref: '#/components/schemas/InitialData'
+        ath_data:
+          $ref: '#/components/schemas/AthData'
+        atl_data:
+          $ref: '#/components/schemas/AtlData'
+        social:
+          $ref: '#/components/schemas/Social'
+        socials:
+          type: array
+          items:
+            $ref: '#/components/schemas/Social'

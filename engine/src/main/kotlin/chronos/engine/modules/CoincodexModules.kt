@@ -2,6 +2,8 @@ package chronos.engine.modules
 
 import chronos.engine.implementation.api.coincodex.CoincodexApi
 import chronos.engine.implementation.api.coincodex.CoincodexScheduler
+import io.ktor.client.HttpClientConfig
+import io.ktor.client.engine.okhttp.OkHttpConfig
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.headers
 import io.ktor.http.HttpHeaders
@@ -10,6 +12,7 @@ import org.koin.core.module.dsl.createdAtStart
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
+import org.openapi.coincodex.api.DefaultApi
 
 val coincodexModule =
     module {
@@ -18,6 +21,14 @@ val coincodexModule =
         }
         singleOf(::CoincodexApi) { createdAtStart() }
         singleOf(::CoincodexScheduler) { createdAtStart() }
+        single { DefaultApi(
+            httpClientConfig =  {
+                with(it as HttpClientConfig<OkHttpConfig>) { buildDefaultHttpClient() }
+            },
+            jsonBlock = {
+                buildGson()
+            }
+        ) }
     }
 
 val coincodexHttpModule =
