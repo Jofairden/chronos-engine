@@ -5,6 +5,7 @@ import chronos.engine.core.dsl.notFound
 import chronos.engine.core.dsl.respondBody
 import chronos.engine.core.interfaces.apis.IExternalApi
 import chronos.engine.core.interfaces.apis.IExternalApiRequest
+import chronos.engine.implementation.core.RoutesImpl
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.ktor.client.HttpClient
@@ -15,16 +16,16 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.util.pipeline.PipelineContext
 import io.ktor.utils.io.errors.IOException
+import org.openapitools.client.infrastructure.ApiClient
 import java.lang.reflect.Type
 import kotlin.coroutines.cancellation.CancellationException
-import org.openapitools.client.infrastructure.ApiClient
 import io.ktor.client.statement.HttpResponse as KtorHttpResponse
 import org.openapitools.client.infrastructure.HttpResponse as OpenApiHttpResponse
 
 /**
  * Represents an abstract class for an external API.
  */
-abstract class ExternalApi : IExternalApi {
+abstract class ExternalApi : IExternalApi, RoutesImpl() {
   abstract override val name: String
   abstract override val gson: Gson
   abstract override val client: HttpClient
@@ -99,6 +100,5 @@ abstract class ExternalApi : IExternalApi {
         internalServerError("500")
       }
     }
-
   }
 }

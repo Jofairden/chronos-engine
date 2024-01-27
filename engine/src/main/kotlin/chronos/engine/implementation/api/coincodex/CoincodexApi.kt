@@ -21,4 +21,14 @@ class CoincodexApi : KoinComponent, KoinScopeComponent, ExternalApi() {
   override val coreApi: DefaultApi by inject()
 
   suspend fun getCoinDetails(symbol: String): HttpResponse<CoinDTO> = coreApi.coincodexGetCoinSymbolGet(symbol)
+  suspend fun getFrontpageHistory(days: Int, samples: Int, coinsLimit: Int) =
+    coreApi.coincodexGetFirstpageHistoryDaysSamplesCoinsLimitGet(days, samples, coinsLimit)
+
+  suspend fun getCoinHistory(
+    symbol: String,
+    startDate: java.time.LocalDate,
+    endDate: java.time.LocalDate,
+    samples: Int
+  ) =
+    coreApi.coincodexGetCoinHistorySymbolStartDateEndDateSamplesGet(symbol, startDate, endDate, samples)
 }

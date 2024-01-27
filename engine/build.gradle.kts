@@ -30,7 +30,7 @@ sealed class Dependency(
 
   object KoinKsp : Dependency("1.3.0")
 
-  object OpenApiTools : Dependency("7.2.0")
+  object OpenApiTools : Dependency("6.3.0")
 
   override fun toString(): String = version
 }
@@ -49,7 +49,7 @@ group = "chronos"
 version = "0.0.1-SNAPSHOT"
 
 java {
-  sourceCompatibility = JavaVersion.VERSION_21
+  sourceCompatibility = JavaVersion.VERSION_17
 }
 
 sourceSets {
@@ -90,6 +90,7 @@ dependencies { //    KOTLIN
   implementation("io.ktor:ktor-client-encoding")
   implementation("io.ktor:ktor-serialization-kotlinx-json")
   implementation("io.ktor:ktor-serialization-gson")
+  implementation("io.ktor:ktor-server-data-conversion")
 
   testImplementation("io.ktor:ktor-server-test-host") //    EXPOSED
   implementation("org.jetbrains.exposed:exposed-core:${Dependency.Exposed}")
@@ -140,7 +141,7 @@ ktlint {
 
 tasks {
   withType<Detekt>().configureEach {
-    jvmTarget = "21"
+    jvmTarget = JavaVersion.VERSION_17.toString()
     reports {
       html.required.set(true) // observe findings in your browser with structure and code snippets
       sarif.required.set(
@@ -150,13 +151,13 @@ tasks {
   }
 
   withType<DetektCreateBaselineTask>().configureEach {
-    jvmTarget = "21"
+    jvmTarget = JavaVersion.VERSION_17.toString()
   }
 
   withType<KotlinCompile> {
     kotlinOptions {
       freeCompilerArgs += "-Xjsr305=strict"
-      jvmTarget = "21"
+      jvmTarget = JavaVersion.VERSION_17.toString()
     }
   }
 
@@ -204,6 +205,7 @@ tasks {
       cleanupOutput.set(true)
       validateSpec.set(true)
       enablePostProcessFile.set(true)
+      generateAliasAsModel.set(true)
       // 	generateApiTests.set(true)
       // 	generateModelTests.set(true)
       // For more details, refer: https://github.com/OpenAPITools/openapi-generator/blob/master/docs/generators/jaxrs-spec.md

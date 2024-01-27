@@ -8,7 +8,7 @@ servers:
 paths:
   /coincodex/get_firstpage_history/{days}/{samples}/{coins_limit}:
     get:
-      summary: Firstpage History
+      summary: "Firstpage History"
       description: "Returns historic data for coins needed to draw the graph on the frontpage."
       parameters:
         - name: days
@@ -32,6 +32,10 @@ paths:
       responses:
         '200':
           description: "Object with our unique internal id for the coin as key and an array of arrays containing timestamp and coin price in usd"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CoinData'
   /coincodex/get_coin/{symbol}:
     get:
       summary: Get Coin
@@ -52,7 +56,7 @@ paths:
                 $ref: "#/components/schemas/Coin"
   /coincodex/get_coin_history/{symbol}/{start_date}/{end_date}/{samples}:
     get:
-      summary: Get Coin History
+      summary: "Get Coin History"
       description: "Returns historic price data for a single coin."
       parameters:
         - name: symbol
@@ -84,6 +88,10 @@ paths:
       responses:
         '200':
           description: "Object with historic price data for a single coin"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CoinHistory'
   /exchange/get_markets_by_coin/{symbol}/:
     get:
       summary: Get Coin Markets
@@ -114,6 +122,53 @@ paths:
           description: "Object that returns the range info for a list of coins id"
 components:
   schemas:
+    CoinHistory:
+      type: object
+      additionalProperties:
+        type: array
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CoinHistoryInner'
+    CoinHistoryInner:
+      type: array
+      items:
+        $ref: '#/components/schemas/CoinHistoryInnerInner'
+    CoinHistoryInnerInner:
+      type: object
+      properties:
+        timestamp:
+          type: integer
+          format: int64
+          description: "timestamp"
+        coinPriceUsd:
+          type: number
+          format: float
+          description: "coin price in usd"
+        24HrVolUsd:
+          type: number
+          format: float
+          description: "24hr volume in usd"
+    CoinData:
+      type: object
+      properties:
+        coin:
+          type: array
+          items:
+            $ref: '#/components/schemas/CoinDataInner'
+    CoinDataInner:
+      type: array
+      items:
+        $ref: '#/components/schemas/CoinDataInnerDetails'
+    CoinDataInnerDetails:
+      type: object
+      properties:
+        timestamp:
+          type: integer
+          format: int64
+        price:
+          type: number
+          format: float
     Socials:
       type: object
       properties:
