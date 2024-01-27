@@ -91,6 +91,8 @@ dependencies { //    KOTLIN
   implementation("io.ktor:ktor-serialization-kotlinx-json")
   implementation("io.ktor:ktor-serialization-gson")
   implementation("io.ktor:ktor-server-data-conversion")
+  implementation("io.ktor:ktor-server-auto-head-respons")
+  implementation("io.ktor:ktor-server-auto-head-response-jvm:2.3.7")
 
   testImplementation("io.ktor:ktor-server-test-host") //    EXPOSED
   implementation("org.jetbrains.exposed:exposed-core:${Dependency.Exposed}")
