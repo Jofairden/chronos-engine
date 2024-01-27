@@ -1,8 +1,11 @@
+
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.HTML
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.SARIF
+import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
+import org.openapitools.generator.gradle.plugin.tasks.ValidateTask
 
 sealed class Dependency(
   private val version: String,
@@ -47,6 +50,14 @@ version = "0.0.1-SNAPSHOT"
 
 java {
   sourceCompatibility = JavaVersion.VERSION_21
+}
+
+sourceSets {
+  getByName("main") {
+    kotlin {
+      srcDir("$buildDir/generated/openapi/src/main/kotlin")
+    }
+  }
 }
 
 repositories {
@@ -116,15 +127,6 @@ detekt {
   baseline = file("$projectDir/config/baseline.xml") // a way of suppressing issues before introducing detekt
 }
 
-tasks.withType<Detekt>().configureEach {
-  reports {
-    html.required.set(true) // observe findings in your browser with structure and code snippets
-    sarif.required.set(
-      true,
-    ) // standardized SARIF format (https://sarifweb.azurewebsites.net/) to support integrations with GitHub Code Scanning
-  }
-}
-
 ktlint {
   verbose.set(true)
   outputToConsole.set(true)
@@ -136,59 +138,89 @@ ktlint {
   }
 }
 
-openApiGenerate {
-  generatorName.set("kotlin")
-  cleanupOutput.set(true)
-  validateSpec.set(true)
-  enablePostProcessFile.set(true) // 	generateApiTests.set(true)
-  // 	generateModelTests.set(true)
-  httpUserAgent.set("Chronos-API")
-  inputSpec.set("$projectDir/src/main/resources/api/coincodex.yml")
-  outputDir.set("$buildDir/generated/openapi")
-  apiPackage.set("org.openapi.coincodex.api")
-  invokerPackage.set("org.openapi.coincodex.invoker")
-  modelPackage.set("org.openapi.coincodex.model")
-  modelNameSuffix.set("DTO")
-  apiNameSuffix.set("OpenApi")
-  configOptions.set(
-    mapOf(
-      "delegatePattern" to "true",
-      "dateLibrary" to "java8-localdatetime",
-      "library" to "jvm-ktor",
-      "serializableModel" to "true",
-      "serializationLibrary" to "gson",
-    ),
-  )
-}
-
-openApiValidate {
-  inputSpec.set("$projectDir/src/main/resources/api/coincodex.yml")
-  recommend.set(true)
-}
-
-sourceSets {
-  getByName("main") {
-    kotlin {
-      srcDir("$buildDir/generated/openapi/src/main/kotlin")
+tasks {
+  withType<Detekt>().configureEach {
+    jvmTarget = "21"
+    reports {
+      html.required.set(true) // observe findings in your browser with structure and code snippets
+      sarif.required.set(
+        true,
+      ) // standardized SARIF format (https://sarifweb.azurewebsites.net/) to support integrations with GitHub Code Scanning
     }
   }
-}
 
-tasks.withType<Detekt>().configureEach {
-  jvmTarget = "21"
-}
-tasks.withType<DetektCreateBaselineTask>().configureEach {
-  jvmTarget = "21"
-}
-
-tasks.withType<KotlinCompile> {
-  kotlinOptions {
-    freeCompilerArgs += "-Xjsr305=strict"
+  withType<DetektCreateBaselineTask>().configureEach {
     jvmTarget = "21"
   }
-}
 
-tasks.withType<Test>().configureEach {
-  useJUnitPlatform()
-  workingDir = project.projectDir
+  withType<KotlinCompile> {
+    kotlinOptions {
+      freeCompilerArgs += "-Xjsr305=strict"
+      jvmTarget = "21"
+    }
+  }
+
+  withType<Test>().configureEach {
+    useJUnitPlatform()
+    workingDir = project.projectDir
+  }
+
+  // Iteration by swagger file root folder and save into swaggerList variable
+  val openApiList = mutableListOf<File>()
+  val dir = File("$rootDir/src/main/resources/api/")
+  dir.walkTopDown().filter { it.isFile && (it.extension == "yaml" || it.extension == "yml") }.toCollection(openApiList)
+
+  // Register a task to generate all clients
+  register<Task>("openApiGenerateAll") {
+    openApiList.forEach {
+      val task = "openApiGenerate" + it.nameWithoutExtension.capitalize()
+      dependsOn(task)
+    }
+  }
+  // Register a task to validate all clients
+  register<Task>("openApiValidateAll") {
+    openApiList.forEach {
+      val task = "openApiValidate" + it.nameWithoutExtension.capitalize()
+      dependsOn(task)
+    }
+  }
+
+  // Iterate on all swagger files and generate a task for each one with the nomenclature openApiGenerate + swagger name
+  openApiList.forEach {
+    println(it.path)
+    val apiName = it.nameWithoutExtension
+
+    register<GenerateTask>("openApiGenerate" + apiName.capitalize()) {
+      generatorName.set("kotlin")
+      httpUserAgent.set("Chronos-API")
+      inputSpec.set("$projectDir/src/main/resources/api/$apiName.yml")
+      outputDir.set("$buildDir/generated/openapi")
+      apiPackage.set("org.openapi.$apiName.api")
+      invokerPackage.set("org.openapi.$apiName.invoker")
+      modelPackage.set("org.openapi.$apiName.model")
+      templateDir.set("$projectDir/src/main/resources/api/templates")
+      modelNameSuffix.set("DTO")
+      apiNameSuffix.set("OpenApi")
+      cleanupOutput.set(true)
+      validateSpec.set(true)
+      enablePostProcessFile.set(true)
+      // 	generateApiTests.set(true)
+      // 	generateModelTests.set(true)
+      // For more details, refer: https://github.com/OpenAPITools/openapi-generator/blob/master/docs/generators/jaxrs-spec.md
+      configOptions.set(
+        mapOf(
+          "delegatePattern" to "true",
+          "dateLibrary" to "java8-localdatetime",
+          "library" to "jvm-ktor",
+          "serializableModel" to "true",
+          "serializationLibrary" to "gson",
+          "useBeanValidation" to "true",
+        ),
+      )
+    }
+    register<ValidateTask>("openApiValidate" + apiName.capitalize()) {
+      inputSpec.set("$projectDir/src/main/resources/api/$apiName.yml")
+      recommend = true
+    }
+  }
 }
