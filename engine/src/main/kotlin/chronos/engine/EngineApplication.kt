@@ -1,16 +1,10 @@
 package chronos.engine
 
-import chronos.engine.modules.coincodexHttpModule
-import chronos.engine.modules.coincodexModule
-import chronos.engine.modules.gsonModule
-import chronos.engine.modules.httpClientModule
-import chronos.engine.modules.swapzoneHttpModule
-import chronos.engine.modules.swapzoneModule
+import chronos.engine.modules.engineModule
 import chronos.engine.plugins.main
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import org.koin.core.context.startKoin
-import org.koin.dsl.module
 import org.koin.environmentProperties
 import org.koin.fileProperties
 import org.koin.logger.SLF4JLogger
@@ -38,14 +32,3 @@ class EngineApplication {
   }
 }
 
-val engineModule =
-  module(createdAtStart = true) {
-    includes(
-      httpClientModule,
-      gsonModule,
-      coincodexModule,
-      coincodexHttpModule,
-      swapzoneModule,
-      swapzoneHttpModule,
-    )
-  }

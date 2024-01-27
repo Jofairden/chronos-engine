@@ -1,0 +1,109 @@
+openapi: "3.0.0"
+info:
+  version: "1.0.0"
+  title: "Mobula"
+  description: "API to get market data for any crypto token"
+servers:
+  - url: https://api.mobula.io/api/1
+tags:
+  - name: Mobula Market
+    description: "Mobula Market API"
+paths:
+  /market/data:
+    get:
+      tags:
+        - Mobula Market
+      description: "Get market data for any crypto token"
+      summary: "Get Market Data"
+      parameters:
+        - in: query
+          name: asset
+          schema:
+            type: string
+          description: "The asset you want to target - asset name only works for assets listed on Mobula"
+          required: true
+        - in: query
+          name: blockchain
+          schema:
+            type: string
+          description: "Blockchain of the asset - only mandatory if asset is sent as smart-contract"
+        - in: query
+          name: symbol
+          schema:
+            type: string
+          description: "Symbol of the asset - only mandatory if no asset name/contract is provided"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMarketData'
+components:
+  schemas:
+    GetMarketData:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            ath:
+              type: number
+              description: "The all-time high price."
+            atl:
+              type: number
+              description: "The all-time low price."
+            is_listed:
+              type: boolean
+              description: "Indicates whether the cryptocurrency is listed or not."
+            liquidity:
+              type: number
+              description: "The liquidity of the cryptocurrency."
+            market_cap:
+              type: number
+              description: "The market capitalization of the cryptocurrency."
+            market_cap_diluted:
+              type: number
+              description: "The diluted market capitalization of the cryptocurrency."
+            off_chain_volume:
+              type: number
+              description: "The off-chain trading volume."
+            price:
+              type: number
+              description: "The current price of the cryptocurrency."
+            price_change_1h:
+              type: number
+              description: "The 1-hour price change."
+            price_change_1m:
+              type: number
+              description: "The 1-month price change."
+            price_change_1y:
+              type: number
+              description: "The 1-year price change."
+            price_change_24h:
+              type: number
+              description: "The 24-hour price change."
+            price_change_7d:
+              type: number
+              description: "The 7-day price change."
+            volume:
+              type: number
+              description: "The trading volume of the cryptocurrency."
+            volume_7d:
+              type: number
+              description: "The 7-day trading volume."
+            volume_change_24h:
+              type: number
+              description: "The 24-hour change in trading volume."
+            name:
+              type: string
+              description: "The name of the cryptocurrency."
+            symbol:
+              type: string
+              description: "The symbol of the cryptocurrency."
+            logo:
+              type: string
+              description: "The url of the logo of the cryptocurrency."
+            rank:
+              type: number
+              description: "The rank of the cryptocurrency."

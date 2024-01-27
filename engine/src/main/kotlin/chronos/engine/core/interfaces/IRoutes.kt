@@ -8,4 +8,5 @@ import io.ktor.util.pipeline.PipelineContext
  */
 interface IRoutes {
   fun PipelineContext<Unit, ApplicationCall>.param(name: String) : String?
+  fun PipelineContext<Unit, ApplicationCall>.queryParam(name: String) : String?
 }

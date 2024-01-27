@@ -1,7 +1,6 @@
 package chronos.engine.modules
 
-import chronos.engine.implementation.api.coincodex.CoincodexApi
-import chronos.engine.implementation.api.coincodex.CoincodexScheduler
+import chronos.engine.implementation.api.mobula.MobulaApi
 import io.ktor.client.HttpClientConfig
 import io.ktor.client.engine.okhttp.OkHttpConfig
 import io.ktor.client.plugins.defaultRequest
@@ -13,15 +12,17 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-val coincodexModule =
+val mobulaModule =
   module {
-    single<String>(named("coincodex.api.baseurl"), createdAtStart = true) {
-      getProperty("coincodex.api.baseurl")
+    single<String>(named("mobula.api.baseurl"), createdAtStart = true) {
+      getProperty("mobula.api.baseurl")
     }
-    singleOf(::CoincodexApi) { createdAtStart() }
-    singleOf(::CoincodexScheduler) { createdAtStart() }
+    single<String>(named("mobula.api.key"), createdAtStart = true) {
+      getProperty("mobula.api.key")
+    }
+    singleOf(::MobulaApi) { createdAtStart() }
     single {
-      org.openapi.coincodex.api.CoincodexApi(
+      org.openapi.mobula.api.MobulaMarketApi(
         httpClientConfig = {
           with(it as HttpClientConfig<OkHttpConfig>) { buildDefaultHttpClient() }
         },
@@ -32,20 +33,22 @@ val coincodexModule =
     }
   }
 
-val coincodexHttpModule =
+val mobulaHttpModule =
   module {
-    scope<CoincodexApi> {
+    scope<MobulaApi> {
       scoped {
         generateHttpClient {
           defaultRequest {
-            val baseUrl by inject<String>(named("coincodex.api.baseurl"))
+            val baseUrl by inject<String>(named("mobula.api.baseurl"))
+            val key by inject<String>(named("mobula.api.key"))
             url {
               host = baseUrl
               protocol = URLProtocol.HTTPS
             }
             headers {
               append(HttpHeaders.Accept, "application/json")
-              append(HttpHeaders.UserAgent, "Chronos Engine Coincodex API")
+              append(HttpHeaders.UserAgent, "Chronos Engine Mobula API")
+              append(HttpHeaders.Authorization, key)
             }
           }
         }

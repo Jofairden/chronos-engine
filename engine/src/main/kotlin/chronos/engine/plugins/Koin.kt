@@ -1,7 +1,7 @@
 package chronos.engine.plugins
 
 import chronos.engine.core.dsl.asLoggable
-import chronos.engine.engineModule
+import chronos.engine.modules.engineModule
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
 import org.koin.core.context.GlobalContext

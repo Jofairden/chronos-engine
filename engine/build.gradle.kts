@@ -173,6 +173,7 @@ tasks {
 
   // Register a task to generate all clients
   register<Task>("openApiGenerateAll") {
+    delete("$buildDir/generated/openapi")
     openApiList.forEach {
       val task = "openApiGenerate" + it.nameWithoutExtension.capitalize()
       dependsOn(task)
@@ -202,7 +203,7 @@ tasks {
       templateDir.set("$projectDir/src/main/resources/api/templates")
       modelNameSuffix.set("DTO")
       apiNameSuffix.set("OpenApi")
-      cleanupOutput.set(true)
+      cleanupOutput.set(false)
       validateSpec.set(true)
       enablePostProcessFile.set(true)
       generateAliasAsModel.set(true)

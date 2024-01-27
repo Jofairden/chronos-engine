@@ -1,13 +1,18 @@
 openapi: 3.0.0
 info:
-  title: CoinCodex API
+  title: "CoinCodex"
   description: "The API is in beta and is subject to change. License: The API is free to use under the Attribution-NonCommercial 3.0 Unported (CC BY-NC 3.0) license. CoinCodex is to be credited if the API is used in your services."
   version: Beta v0.2
 servers:
   - url: https://coincodex.com/api
+tags:
+  - name: Coincodex
+    description: "Coincodex API"
 paths:
   /coincodex/get_firstpage_history/{days}/{samples}/{coins_limit}:
     get:
+      tags:
+        - Coincodex
       summary: "Firstpage History"
       description: "Returns historic data for coins needed to draw the graph on the frontpage."
       parameters:
@@ -32,12 +37,10 @@ paths:
       responses:
         '200':
           description: "Object with our unique internal id for the coin as key and an array of arrays containing timestamp and coin price in usd"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CoinData'
   /coincodex/get_coin/{symbol}:
     get:
+      tags:
+        - Coincodex
       summary: Get Coin
       description: "Returns all properties for the coin needet to display the coin details page"
       parameters:
@@ -56,6 +59,8 @@ paths:
                 $ref: "#/components/schemas/Coin"
   /coincodex/get_coin_history/{symbol}/{start_date}/{end_date}/{samples}:
     get:
+      tags:
+        - Coincodex
       summary: "Get Coin History"
       description: "Returns historic price data for a single coin."
       parameters:
@@ -88,12 +93,10 @@ paths:
       responses:
         '200':
           description: "Object with historic price data for a single coin"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CoinHistory'
   /exchange/get_markets_by_coin/{symbol}/:
     get:
+      tags:
+        - Coincodex
       summary: Get Coin Markets
       description: "Returns exchanges and markets for a coin."
       parameters:
@@ -108,6 +111,8 @@ paths:
           description: "Array of objects with exchange and market details for a coin"
   /coincodex/get_coin_ranges/{comma_separated_list_of_symbols}/:
     get:
+      tags:
+        - Coincodex
       summary: Coin Ranges
       description: "Returns the range info for the list of coins."
       parameters:
@@ -122,53 +127,6 @@ paths:
           description: "Object that returns the range info for a list of coins id"
 components:
   schemas:
-    CoinHistory:
-      type: object
-      additionalProperties:
-        type: array
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/CoinHistoryInner'
-    CoinHistoryInner:
-      type: array
-      items:
-        $ref: '#/components/schemas/CoinHistoryInnerInner'
-    CoinHistoryInnerInner:
-      type: object
-      properties:
-        timestamp:
-          type: integer
-          format: int64
-          description: "timestamp"
-        coinPriceUsd:
-          type: number
-          format: float
-          description: "coin price in usd"
-        24HrVolUsd:
-          type: number
-          format: float
-          description: "24hr volume in usd"
-    CoinData:
-      type: object
-      properties:
-        coin:
-          type: array
-          items:
-            $ref: '#/components/schemas/CoinDataInner'
-    CoinDataInner:
-      type: array
-      items:
-        $ref: '#/components/schemas/CoinDataInnerDetails'
-    CoinDataInnerDetails:
-      type: object
-      properties:
-        timestamp:
-          type: integer
-          format: int64
-        price:
-          type: number
-          format: float
     Socials:
       type: object
       properties:
