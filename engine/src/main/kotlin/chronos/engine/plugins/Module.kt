@@ -3,11 +3,11 @@ package chronos.engine.plugins
 import io.ktor.server.application.Application
 
 fun Application.main() {
-    configureKoin()
+  configureKoin()
 
-    configureResources()
-    configureRouting()
-    configureSerialization()
+  configureResources()
+  configureRouting()
+  configureSerialization()
 
-    installCors()
+  installCors()
 }

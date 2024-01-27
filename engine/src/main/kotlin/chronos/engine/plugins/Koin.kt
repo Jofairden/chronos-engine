@@ -12,23 +12,23 @@ import org.koin.ktor.plugin.KoinApplicationStopped
 import org.koin.logger.slf4jLogger
 
 fun Application.configureKoin() {
-    // Install Koin
-    if (GlobalContext.getOrNull() == null) {
-        install(Koin) {
-            slf4jLogger()
-            modules(engineModule)
-        }
+  // Install Koin
+  if (GlobalContext.getOrNull() == null) {
+    install(Koin) {
+      slf4jLogger()
+      modules(engineModule)
     }
-    // Install Ktor features
-    environment.monitor.subscribe(KoinApplicationStarted) {
-        asLoggable("Koin started") { info() }
-    }
+  }
+  // Install Ktor features
+  environment.monitor.subscribe(KoinApplicationStarted) {
+    asLoggable("Koin started") { info() }
+  }
 
-    environment.monitor.subscribe(KoinApplicationStopPreparing) {
-        asLoggable("Koin stopping...") { info() }
-    }
+  environment.monitor.subscribe(KoinApplicationStopPreparing) {
+    asLoggable("Koin stopping...") { info() }
+  }
 
-    environment.monitor.subscribe(KoinApplicationStopped) {
-        asLoggable("Koin stopped.") { info() }
-    }
+  environment.monitor.subscribe(KoinApplicationStopped) {
+    asLoggable("Koin stopped.") { info() }
+  }
 }

@@ -16,36 +16,36 @@ import org.koin.fileProperties
 import org.koin.logger.SLF4JLogger
 
 @Suppress(
-    "UtilityClassWithPublicConstructor",
-    "SpreadOperator",
+  "UtilityClassWithPublicConstructor",
+  "SpreadOperator",
 )
 class EngineApplication {
-    companion object {
-        @JvmStatic
-        fun main(args: Array<String>) {
-            startKoin {
-                logger(SLF4JLogger())
-                fileProperties()
-                modules(engineModule)
-                environmentProperties()
-                createEagerInstances()
-            }
+  companion object {
+    @JvmStatic
+    fun main(args: Array<String>) {
+      startKoin {
+        logger(SLF4JLogger())
+        fileProperties()
+        modules(engineModule)
+        environmentProperties()
+        createEagerInstances()
+      }
 
-            embeddedServer(Netty, port = 8080, host = "0.0.0.0") {
-                main()
-            }.start(wait = true)
-        }
+      embeddedServer(Netty, port = 8080, host = "0.0.0.0") {
+        main()
+      }.start(wait = true)
     }
+  }
 }
 
 val engineModule =
-    module(createdAtStart = true) {
-        includes(
-            httpClientModule,
-            gsonModule,
-            coincodexModule,
-            coincodexHttpModule,
-            swapzoneModule,
-            swapzoneHttpModule,
-        )
-    }
+  module(createdAtStart = true) {
+    includes(
+      httpClientModule,
+      gsonModule,
+      coincodexModule,
+      coincodexHttpModule,
+      swapzoneModule,
+      swapzoneHttpModule,
+    )
+  }

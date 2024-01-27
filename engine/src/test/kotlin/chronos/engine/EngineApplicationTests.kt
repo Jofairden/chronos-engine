@@ -11,31 +11,31 @@ import org.koin.test.junit5.AutoCloseKoinTest
 import org.koin.test.mock.MockProvider
 
 class EngineApplicationTests : AutoCloseKoinTest() {
-    val testModule =
-        module {
-            includes(
-                engineModule,
-            )
-            single<String>(named("coincodex.api.baseurl"), createdAtStart = true) {
-                "coincodex"
-            }
-            single<String>(named("swapzone.api.baseurl"), createdAtStart = true) {
-                "swapzone"
-            }
-            single<String>(named("swapzone.api.key"), createdAtStart = true) {
-                "swapzone.key"
-            }
-        }
-
-    @Test
-    fun checkKoinModule() {
-        if (GlobalContext.getOrNull() == null) {
-            koinApplication {
-//                fileProperties("test.properties")
-                modules(testModule)
-                MockProvider.register { clazz -> mockkClass(clazz) }
-                checkModules()
-            }
-        }
+  val testModule =
+    module {
+      includes(
+        engineModule,
+      )
+      single<String>(named("coincodex.api.baseurl"), createdAtStart = true) {
+        "coincodex"
+      }
+      single<String>(named("swapzone.api.baseurl"), createdAtStart = true) {
+        "swapzone"
+      }
+      single<String>(named("swapzone.api.key"), createdAtStart = true) {
+        "swapzone.key"
+      }
     }
+
+  @Test
+  fun checkKoinModule() {
+    if (GlobalContext.getOrNull() == null) {
+      koinApplication {
+//                fileProperties("test.properties")
+        modules(testModule)
+        MockProvider.register { clazz -> mockkClass(clazz) }
+        checkModules()
+      }
+    }
+  }
 }

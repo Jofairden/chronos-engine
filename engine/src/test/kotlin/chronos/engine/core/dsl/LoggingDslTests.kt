@@ -18,95 +18,95 @@ import org.slf4j.LoggerFactory
 
 @ExtendWith(MockKExtension::class)
 class LoggingDslTests {
-    @SpyK
-    var logger: Logger = LoggerFactory.getLogger(LoggableTests::class.java)
+  @SpyK
+  var logger: Logger = LoggerFactory.getLogger(LoggableTests::class.java)
 
-    @MockK(relaxed = true)
-    lateinit var mock: Loggable<Any>
+  @MockK(relaxed = true)
+  lateinit var mock: Loggable<Any>
 
-    @BeforeEach
-    fun setup() {
-        MockKAnnotations.init(this)
-        every { mock.loggable } returns "Mock Test"
-        every { mock.logger } returns logger
-        every { mock.getMessage() } answers { callOriginal() }
-        every { mock.info() } answers { callOriginal() }
-        every { mock.trace() } answers { callOriginal() }
-        every { mock.warn() } answers { callOriginal() }
-        every { mock.debug() } answers { callOriginal() }
-        every { mock.error() } answers { callOriginal() }
-        every { mock.log(any()) } answers { callOriginal() }
+  @BeforeEach
+  fun setup() {
+    MockKAnnotations.init(this)
+    every { mock.loggable } returns "Mock Test"
+    every { mock.logger } returns logger
+    every { mock.getMessage() } answers { callOriginal() }
+    every { mock.info() } answers { callOriginal() }
+    every { mock.trace() } answers { callOriginal() }
+    every { mock.warn() } answers { callOriginal() }
+    every { mock.debug() } answers { callOriginal() }
+    every { mock.error() } answers { callOriginal() }
+    every { mock.log(any()) } answers { callOriginal() }
+  }
+
+  @Test
+  fun `loggable calls info`() {
+    val loggable =
+      spyk(
+        asLoggable("Test") {},
+      )
+    every { loggable.logger } returns logger
+    every { loggable.info() } answers { callOriginal() }
+    loggable.info()
+    verify(exactly = 1) { logger.info("Test") }
+  }
+
+  @Test
+  fun `test loggable log function for INFO level`() {
+    mock.log(LogLevel.INFO)
+    verify(exactly = 1) { logger.info(any()) }
+    verify(exactly = 0) {
+      logger.error(any<String>())
+      logger.trace(any<String>())
+      logger.debug(any<String>())
+      logger.warn(any<String>())
     }
+  }
 
-    @Test
-    fun `loggable calls info`() {
-        val loggable =
-            spyk(
-                asLoggable("Test") {},
-            )
-        every { loggable.logger } returns logger
-        every { loggable.info() } answers { callOriginal() }
-        loggable.info()
-        verify(exactly = 1) { logger.info("Test") }
+  @Test
+  fun `test loggable log function for ERROR level`() {
+    mock.log(LogLevel.ERROR)
+    verify(exactly = 1) { logger.error(any()) }
+    verify(exactly = 0) {
+      logger.info(any<String>())
+      logger.trace(any<String>())
+      logger.debug(any<String>())
+      logger.warn(any<String>())
     }
+  }
 
-    @Test
-    fun `test loggable log function for INFO level`() {
-        mock.log(LogLevel.INFO)
-        verify(exactly = 1) { logger.info(any()) }
-        verify(exactly = 0) {
-            logger.error(any<String>())
-            logger.trace(any<String>())
-            logger.debug(any<String>())
-            logger.warn(any<String>())
-        }
+  @Test
+  fun `test loggable log function for TRACE level`() {
+    mock.log(LogLevel.TRACE)
+    verify(exactly = 1) { logger.trace(any()) }
+    verify(exactly = 0) {
+      logger.error(any<String>())
+      logger.info(any<String>())
+      logger.debug(any<String>())
+      logger.warn(any<String>())
     }
+  }
 
-    @Test
-    fun `test loggable log function for ERROR level`() {
-        mock.log(LogLevel.ERROR)
-        verify(exactly = 1) { logger.error(any()) }
-        verify(exactly = 0) {
-            logger.info(any<String>())
-            logger.trace(any<String>())
-            logger.debug(any<String>())
-            logger.warn(any<String>())
-        }
+  @Test
+  fun `test loggable log function for DEBUG level`() {
+    mock.log(LogLevel.DEBUG)
+    verify(exactly = 1) { logger.debug(any()) }
+    verify(exactly = 0) {
+      logger.error(any<String>())
+      logger.trace(any<String>())
+      logger.info(any<String>())
+      logger.warn(any<String>())
     }
+  }
 
-    @Test
-    fun `test loggable log function for TRACE level`() {
-        mock.log(LogLevel.TRACE)
-        verify(exactly = 1) { logger.trace(any()) }
-        verify(exactly = 0) {
-            logger.error(any<String>())
-            logger.info(any<String>())
-            logger.debug(any<String>())
-            logger.warn(any<String>())
-        }
+  @Test
+  fun `test loggable log function for WARN level`() {
+    mock.log(LogLevel.WARN)
+    verify(exactly = 1) { logger.warn(any()) }
+    verify(exactly = 0) {
+      logger.error(any<String>())
+      logger.trace(any<String>())
+      logger.debug(any<String>())
+      logger.info(any<String>())
     }
-
-    @Test
-    fun `test loggable log function for DEBUG level`() {
-        mock.log(LogLevel.DEBUG)
-        verify(exactly = 1) { logger.debug(any()) }
-        verify(exactly = 0) {
-            logger.error(any<String>())
-            logger.trace(any<String>())
-            logger.info(any<String>())
-            logger.warn(any<String>())
-        }
-    }
-
-    @Test
-    fun `test loggable log function for WARN level`() {
-        mock.log(LogLevel.WARN)
-        verify(exactly = 1) { logger.warn(any()) }
-        verify(exactly = 0) {
-            logger.error(any<String>())
-            logger.trace(any<String>())
-            logger.debug(any<String>())
-            logger.info(any<String>())
-        }
-    }
+  }
 }

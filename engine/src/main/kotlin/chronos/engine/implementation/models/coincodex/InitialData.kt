@@ -7,12 +7,12 @@ import java.time.LocalDateTime
 
 @Serializable
 data class InitialData(
-    @Contextual
-    val date: LocalDateTime,
-    @SerializedName("price_usd")
-    val priceUsd: Double,
-    @SerializedName("price_btc")
-    val priceBtc: Double,
-    @SerializedName("price_eth")
-    val priceEth: Double,
+  @Contextual
+  val date: LocalDateTime,
+  @SerializedName("price_usd")
+  val priceUsd: Double,
+  @SerializedName("price_btc")
+  val priceBtc: Double,
+  @SerializedName("price_eth")
+  val priceEth: Double,
 )

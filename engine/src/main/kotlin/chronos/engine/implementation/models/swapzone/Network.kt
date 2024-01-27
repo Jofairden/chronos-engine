@@ -7,14 +7,14 @@ import kotlinx.serialization.Serializable
 @optics
 @Serializable
 data class NetworkObject(
-    @SerializedName("name")
-    val name: String,
-    @SerializedName("ticker")
-    val ticker: String,
-    @SerializedName("network")
-    val network: String,
-    @SerializedName("smartContract")
-    val smartContract: String,
+  @SerializedName("name")
+  val name: String,
+  @SerializedName("ticker")
+  val ticker: String,
+  @SerializedName("network")
+  val network: String,
+  @SerializedName("smartContract")
+  val smartContract: String,
 )
 
 @JvmInline

@@ -6,22 +6,22 @@ import org.slf4j.Logger
 
 @optics
 data class LoggingContext<A : Logger, B : Loggable<*>>(
-    val logger: A,
-    val loggable: B,
+  val logger: A,
+  val loggable: B,
 ) {
-    companion object {
-        fun <B : Loggable<*>> of(loggable: B): LoggingContext<Logger, B> = LoggingContext(loggable.logger, loggable)
-    }
+  companion object {
+    fun <B : Loggable<*>> of(loggable: B): LoggingContext<Logger, B> = LoggingContext(loggable.logger, loggable)
+  }
 
-    fun <A : ILogLevel> log(level: A): Unit = loggable.log(level)
+  fun <A : ILogLevel> log(level: A): Unit = loggable.log(level)
 
-    fun info() = loggable.info()
+  fun info() = loggable.info()
 
-    fun trace() = loggable.trace()
+  fun trace() = loggable.trace()
 
-    fun debug() = loggable.debug()
+  fun debug() = loggable.debug()
 
-    fun warn() = loggable.warn()
+  fun warn() = loggable.warn()
 
-    fun error() = loggable.error()
+  fun error() = loggable.error()
 }

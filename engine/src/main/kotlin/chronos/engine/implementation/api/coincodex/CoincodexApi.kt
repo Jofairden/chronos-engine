@@ -13,13 +13,12 @@ import org.openapi.coincodex.model.CoinDTO
 import org.openapitools.client.infrastructure.HttpResponse
 
 class CoincodexApi : KoinComponent, KoinScopeComponent, ExternalApi() {
-	override val scope: Scope by lazy { createScope(this) }
+  override val scope: Scope by lazy { createScope(this) }
 
-	override val name: String = "coincodex"
-	override val client: HttpClient by inject()
-	override val gson: Gson by inject()
-	override val coreApi: DefaultApi by inject()
+  override val name: String = "coincodex"
+  override val client: HttpClient by inject()
+  override val gson: Gson by inject()
+  override val coreApi: DefaultApi by inject()
 
-	suspend fun getCoinDetails(symbol: String): HttpResponse<CoinDTO>
-		= coreApi.coincodexGetCoinSymbolGet(symbol)
+  suspend fun getCoinDetails(symbol: String): HttpResponse<CoinDTO> = coreApi.coincodexGetCoinSymbolGet(symbol)
 }

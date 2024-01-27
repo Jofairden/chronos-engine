@@ -7,39 +7,39 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 open class Loggable<out T : Any>(
-    override val loggable: T,
+  override val loggable: T,
 ) : ILoggable<T> {
-    val logger: Logger = LoggerFactory.getLogger(Reflection.getCallerClassName())
+  val logger: Logger = LoggerFactory.getLogger(Reflection.getCallerClassName())
 
-    override fun getMessage(): String = loggable.toString()
+  override fun getMessage(): String = loggable.toString()
 
-    override fun <A : ILogLevel> log(level: A): Unit =
-        when (level) {
-            LogLevel.INFO -> info()
-            LogLevel.DEBUG -> debug()
-            LogLevel.WARN -> warn()
-            LogLevel.ERROR -> error()
-            LogLevel.TRACE -> trace()
-            else -> trace()
-        }
-
-    override fun trace() {
-        logger.trace(getMessage())
+  override fun <A : ILogLevel> log(level: A): Unit =
+    when (level) {
+      LogLevel.INFO -> info()
+      LogLevel.DEBUG -> debug()
+      LogLevel.WARN -> warn()
+      LogLevel.ERROR -> error()
+      LogLevel.TRACE -> trace()
+      else -> trace()
     }
 
-    override fun debug() {
-        logger.debug(getMessage())
-    }
+  override fun trace() {
+    logger.trace(getMessage())
+  }
 
-    override fun info() {
-        logger.info(getMessage())
-    }
+  override fun debug() {
+    logger.debug(getMessage())
+  }
 
-    override fun warn() {
-        logger.warn(getMessage())
-    }
+  override fun info() {
+    logger.info(getMessage())
+  }
 
-    override fun error() {
-        logger.error(getMessage())
-    }
+  override fun warn() {
+    logger.warn(getMessage())
+  }
+
+  override fun error() {
+    logger.error(getMessage())
+  }
 }

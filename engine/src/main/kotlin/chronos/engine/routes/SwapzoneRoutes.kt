@@ -17,27 +17,27 @@ import io.ktor.server.routing.routing
 import org.koin.ktor.ext.inject
 
 fun Application.configureSwapzoneRoutes() {
-    val api: SwapzoneApi by inject()
+  val api: SwapzoneApi by inject()
 
-    routing {
-        route("/swapzone") {
-            get {
-                call.respondText { "Swapzone Routes" }
-            }
+  routing {
+    route("/swapzone") {
+      get {
+        call.respondText { "Swapzone Routes" }
+      }
 
-            get<SwapzoneNetworksResource> { networks ->
-                try {
-                    with(api) {
-                        CurrenciesRequest(api).execute {
-                            val data = getJsonCollection<NetworkObject>()
-                            this@get.call.respond(data)
-                        }
-                    }
-                } catch (ex: Exception) {
-                    asLoggable(ex) { error() }
-                    call.respond(HttpStatusCode.NotFound)
-                }
+      get<SwapzoneNetworksResource> { networks ->
+        try {
+          with(api) {
+            CurrenciesRequest(api).execute {
+              val data = getJsonCollection<NetworkObject>()
+              this@get.call.respond(data)
             }
+          }
+        } catch (ex: Exception) {
+          asLoggable(ex) { error() }
+          call.respond(HttpStatusCode.NotFound)
         }
+      }
     }
+  }
 }

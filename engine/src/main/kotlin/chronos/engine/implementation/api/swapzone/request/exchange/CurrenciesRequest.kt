@@ -9,7 +9,7 @@ import chronos.engine.implementation.api.swapzone.SwapzoneApi
  * @param api The instance of the SwapzoneApi to be used for making the request.
  */
 class CurrenciesRequest(
-    override val api: SwapzoneApi,
+  override val api: SwapzoneApi,
 ) : IExternalApiRequest {
-    override val endpoint: String = "exchange/currencies"
+  override val endpoint: String = "exchange/currencies"
 }

@@ -13,10 +13,10 @@ import org.slf4j.Logger
  * @return the loggable object after applying the block of code
  */
 fun <B : Any> asLoggable(
-    value: B,
-    block: LoggingContext<Logger, Loggable<B>>.() -> Unit,
+  value: B,
+  block: LoggingContext<Logger, Loggable<B>>.() -> Unit,
 ): Loggable<B> {
-    val loggable = Loggable(value)
-    val ctx = LoggingContext.of(loggable)
-    return ctx.apply { this.block() }.let { loggable }
+  val loggable = Loggable(value)
+  val ctx = LoggingContext.of(loggable)
+  return ctx.apply { this.block() }.let { loggable }
 }

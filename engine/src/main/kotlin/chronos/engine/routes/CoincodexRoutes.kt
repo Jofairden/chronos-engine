@@ -12,22 +12,22 @@ import io.ktor.server.routing.routing
 import org.koin.ktor.ext.inject
 
 fun Application.configureCoincodexNetworksRoutes() {
-    val api: CoincodexApi by inject()
+  val api: CoincodexApi by inject()
 
-    routing {
-        route("/coincodex") {
-            get {
-                call.respondText { "Coincodex Routes" }
-            }
+  routing {
+    route("/coincodex") {
+      get {
+        call.respondText { "Coincodex Routes" }
+      }
 
-            get<CoincodexGetCoinResource.Symbol> { coin ->
-                val symbol = call.parameters["symbol"]!!
-                with (api) {
-                    with(api.getCoinDetails(symbol)) {
-                        handle(this@get)
-                    }
-                }
-            }
+      get<CoincodexGetCoinResource.Symbol> { coin ->
+        val symbol = call.parameters["symbol"]!!
+        with(api) {
+          with(api.getCoinDetails(symbol)) {
+            handle(this@get)
+          }
         }
+      }
     }
+  }
 }

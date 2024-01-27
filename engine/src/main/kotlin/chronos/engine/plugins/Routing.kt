@@ -7,8 +7,8 @@ import io.ktor.server.application.install
 import io.ktor.server.routing.Routing
 
 fun Application.configureRouting() {
-    install(Routing)
+  install(Routing)
 
-    configureCoincodexNetworksRoutes()
-    configureSwapzoneRoutes()
+  configureCoincodexNetworksRoutes()
+  configureSwapzoneRoutes()
 }

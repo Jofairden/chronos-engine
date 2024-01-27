@@ -15,39 +15,41 @@ import org.koin.dsl.module
 import org.openapi.coincodex.api.DefaultApi
 
 val coincodexModule =
-    module {
-        single<String>(named("coincodex.api.baseurl"), createdAtStart = true) {
-            getProperty("coincodex.api.baseurl")
-        }
-        singleOf(::CoincodexApi) { createdAtStart() }
-        singleOf(::CoincodexScheduler) { createdAtStart() }
-        single { DefaultApi(
-            httpClientConfig =  {
-                with(it as HttpClientConfig<OkHttpConfig>) { buildDefaultHttpClient() }
-            },
-            jsonBlock = {
-                buildGson()
-            }
-        ) }
+  module {
+    single<String>(named("coincodex.api.baseurl"), createdAtStart = true) {
+      getProperty("coincodex.api.baseurl")
     }
+    singleOf(::CoincodexApi) { createdAtStart() }
+    singleOf(::CoincodexScheduler) { createdAtStart() }
+    single {
+      DefaultApi(
+        httpClientConfig = {
+          with(it as HttpClientConfig<OkHttpConfig>) { buildDefaultHttpClient() }
+        },
+        jsonBlock = {
+          buildGson()
+        }
+      )
+    }
+  }
 
 val coincodexHttpModule =
-    module {
-        scope<CoincodexApi> {
-            scoped {
-                generateHttpClient {
-                    defaultRequest {
-                        val baseUrl by inject<String>(named("coincodex.api.baseurl"))
-                        url {
-                            host = baseUrl
-                            protocol = URLProtocol.HTTPS
-                        }
-                        headers {
-                            append(HttpHeaders.Accept, "application/json")
-                            append(HttpHeaders.UserAgent, "Chronos Engine Coincodex API")
-                        }
-                    }
-                }
+  module {
+    scope<CoincodexApi> {
+      scoped {
+        generateHttpClient {
+          defaultRequest {
+            val baseUrl by inject<String>(named("coincodex.api.baseurl"))
+            url {
+              host = baseUrl
+              protocol = URLProtocol.HTTPS
             }
+            headers {
+              append(HttpHeaders.Accept, "application/json")
+              append(HttpHeaders.UserAgent, "Chronos Engine Coincodex API")
+            }
+          }
         }
+      }
     }
+  }
