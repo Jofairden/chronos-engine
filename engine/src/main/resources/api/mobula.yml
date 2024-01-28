@@ -8,38 +8,12 @@ servers:
 tags:
   - name: Mobula Market
     description: "Mobula Market API"
-paths:
-  /market/data:
-    get:
-      tags:
-        - Mobula Market
-      description: "Get market data for any crypto token"
-      summary: "Get Market Data"
-      parameters:
-        - in: query
-          name: asset
-          schema:
-            type: string
-          description: "The asset you want to target - asset name only works for assets listed on Mobula"
-          required: true
-        - in: query
-          name: blockchain
-          schema:
-            type: string
-          description: "Blockchain of the asset - only mandatory if asset is sent as smart-contract"
-        - in: query
-          name: symbol
-          schema:
-            type: string
-          description: "Symbol of the asset - only mandatory if no asset name/contract is provided"
-      responses:
-        "200":
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetMarketData'
 components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
   schemas:
     GetMarketData:
       type: object
@@ -107,3 +81,49 @@ components:
             rank:
               type: number
               description: "The rank of the cryptocurrency."
+paths:
+  /:
+    get:
+      parameters:
+        - name: authorization
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'Will send `Authenticated`'
+        '403':
+          description: 'You do not have necessary permissions for the resource'
+  /market/data:
+    get:
+      security:
+        - apiKeyAuth: []
+      tags:
+        - Mobula Market
+      description: "Get market data for any crypto token"
+      summary: "Get Market Data"
+      parameters:
+        - in: query
+          name: asset
+          schema:
+            type: string
+          description: "The asset you want to target - asset name only works for assets listed on Mobula"
+          required: true
+        - in: query
+          name: blockchain
+          schema:
+            type: string
+          description: "Blockchain of the asset - only mandatory if asset is sent as smart-contract"
+        - in: query
+          name: symbol
+          schema:
+            type: string
+          description: "Symbol of the asset - only mandatory if no asset name/contract is provided"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMarketData'

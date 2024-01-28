@@ -39,7 +39,7 @@ fun GsonBuilder.buildGson(): GsonBuilder =
     setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
   }
 
-inline fun <reified T : HttpClientEngineConfig> HttpClientConfig<T>.buildDefaultHttpClient() = run {
+inline fun <reified T : HttpClientEngineConfig> HttpClientConfig<T>.buildDefaultHttpClient() = apply {
   if (typeOf<T>() == OkHttpConfig::class.java) {
     with(this as HttpClientConfig<OkHttpConfig>) {
       engine {

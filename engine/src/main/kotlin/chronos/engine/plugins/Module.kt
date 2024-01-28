@@ -11,4 +11,5 @@ fun Application.main() {
   installSerialization()
   installCors()
   installDataConversion()
+  installRateLimits()
 }

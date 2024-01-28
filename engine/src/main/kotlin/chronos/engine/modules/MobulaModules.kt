@@ -11,6 +11,7 @@ import org.koin.core.module.dsl.createdAtStart
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
+import org.openapi.mobula.api.MobulaMarketApi
 
 val mobulaModule =
   module {
@@ -21,15 +22,16 @@ val mobulaModule =
       getProperty("mobula.api.key")
     }
     singleOf(::MobulaApi) { createdAtStart() }
-    single {
-      org.openapi.mobula.api.MobulaMarketApi(
+    single<MobulaMarketApi>(createdAtStart = true) {
+      val key by inject<String>(named("mobula.api.key"))
+      MobulaMarketApi(
         httpClientConfig = {
-          with(it as HttpClientConfig<OkHttpConfig>) { buildDefaultHttpClient() }
+          with(it as HttpClientConfig<OkHttpConfig>) {
+            buildDefaultHttpClient()
+          }
         },
-        jsonBlock = {
-          buildGson()
-        }
-      )
+        jsonBlock = { buildGson() }
+      ).apply { setApiKey(key) }
     }
   }
 
