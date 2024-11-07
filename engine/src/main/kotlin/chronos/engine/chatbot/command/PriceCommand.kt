@@ -4,6 +4,8 @@ import chronos.engine.core.chatbot.command.DeferredCommand
 import chronos.engine.domain.api.mobula.MobulaService
 import kotlinx.coroutines.Dispatchers
 import net.dv8tion.jda.api.events.interaction.command.GenericCommandInteractionEvent
+import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions
+import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData
 import org.koin.core.component.inject
 
 class PriceCommand : DeferredCommand() {
@@ -12,6 +14,13 @@ class PriceCommand : DeferredCommand() {
 
   override val name: String
     get() = "price"
+
+  override val description: String
+    get() = "Haalt de BTC prijs op"
+
+  override fun configure(data: SlashCommandData): Unit = with(data) {
+    setDefaultPermissions(DefaultMemberPermissions.ENABLED)
+  }
 
   override fun coroutineContext() = Dispatchers.IO
 

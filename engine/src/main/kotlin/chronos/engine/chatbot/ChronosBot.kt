@@ -10,6 +10,7 @@ import org.koin.core.component.inject
  * Chronos bot application class. Contains main logic of the bot
  */
 class ChronosBot : KoinComponent {
+
   private val internals by inject<ChronosInternals>()
 
   /**

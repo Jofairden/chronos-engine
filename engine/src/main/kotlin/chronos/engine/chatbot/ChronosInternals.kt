@@ -23,9 +23,9 @@ class ChronosInternals : KoinComponent {
     log("Initializing JDA").info()
 
     initJdaEventListeners()
-    commands.initSlashCommands()
     startScheduling()
 
+    commands.initSlashCommands()
     jda.awaitStatus(JDA.Status.INITIALIZED)
   }
 

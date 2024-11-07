@@ -2,10 +2,20 @@ package chronos.engine.chatbot.command
 
 import chronos.engine.core.chatbot.command.DeferredCommand
 import net.dv8tion.jda.api.events.interaction.command.GenericCommandInteractionEvent
+import net.dv8tion.jda.api.interactions.commands.OptionType
+import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData
 
 class PingCommand : DeferredCommand() {
+
   override val name: String
     get() = "ping"
+
+  override val description: String
+    get() = "Pingt de bot"
+
+  override fun configure(data: SlashCommandData): Unit = with(data) {
+    addOption(OptionType.STRING, "content", "What the bot should say", true)
+  }
 
   override suspend fun deferredInvoke(event: GenericCommandInteractionEvent, args: List<String>) {
     val start = System.currentTimeMillis()

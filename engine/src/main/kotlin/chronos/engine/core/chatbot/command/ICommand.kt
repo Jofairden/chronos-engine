@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.events.interaction.command.GenericCommandInteractionE
 
 interface ICommand {
   val name: String
+  val description: String
 
   fun invoke(
     event: GenericCommandInteractionEvent,
