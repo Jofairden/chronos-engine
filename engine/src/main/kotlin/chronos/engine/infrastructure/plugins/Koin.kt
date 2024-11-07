@@ -1,6 +1,6 @@
 package chronos.engine.infrastructure.plugins
 
-import chronos.engine.core.dsl.asLoggable
+import chronos.engine.core.dsl.log
 import chronos.engine.infrastructure.modules.engineModule
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
@@ -21,14 +21,14 @@ fun Application.configureKoin() {
   }
   // Install Ktor features
   environment.monitor.subscribe(KoinApplicationStarted) {
-    asLoggable("Koin started") { info() }
+    log("Koin started") { info() }
   }
 
   environment.monitor.subscribe(KoinApplicationStopPreparing) {
-    asLoggable("Koin stopping...") { info() }
+    log("Koin stopping...") { info() }
   }
 
   environment.monitor.subscribe(KoinApplicationStopped) {
-    asLoggable("Koin stopped.") { info() }
+    log("Koin stopped.") { info() }
   }
 }

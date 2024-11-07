@@ -1,8 +1,8 @@
 package chronos.engine.infrastructure.modules
 
-import chronos.engine.core.dsl.asLoggable
 import chronos.engine.core.dsl.isInternalServerError
 import chronos.engine.core.dsl.isRequestTimeout
+import chronos.engine.core.dsl.log
 import chronos.engine.core.gson.adapters.LocalDateTimeTypeAdapter
 import chronos.engine.core.gson.adapters.LocalDateTypeAdapter
 import com.google.gson.FieldNamingPolicy
@@ -13,12 +13,20 @@ import io.ktor.client.HttpClientConfig
 import io.ktor.client.engine.HttpClientEngineConfig
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.engine.okhttp.OkHttpConfig
+import io.ktor.client.plugins.HttpRequestRetry
 import io.ktor.client.plugins.RedirectResponseException
+import io.ktor.client.plugins.UserAgent
+import io.ktor.client.plugins.cache.HttpCache
 import io.ktor.client.plugins.cache.storage.FileStorage
+import io.ktor.client.plugins.compression.ContentEncoding
+import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
+import io.ktor.client.plugins.logging.Logging
 import io.ktor.http.isSuccess
 import io.ktor.serialization.gson.gson
 import org.koin.dsl.module
+import java.nio.file.Files
+import java.nio.file.Paths
 import java.time.LocalDate
 import java.time.LocalDateTime
 import kotlin.reflect.typeOf
@@ -39,6 +47,9 @@ fun GsonBuilder.buildGson(): GsonBuilder =
     setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
   }
 
+/**
+ * Bouwt een generieke default HttpClient
+ */
 inline fun <reified T : HttpClientEngineConfig> HttpClientConfig<T>.buildDefaultHttpClient() =
   apply {
     if (typeOf<T>() == OkHttpConfig::class.java) {
@@ -52,14 +63,14 @@ inline fun <reified T : HttpClientEngineConfig> HttpClientConfig<T>.buildDefault
     }
 
     with(this) {
-      install(io.ktor.client.plugins.logging.Logging) {
+      install(Logging) {
         logger =
           object : Logger {
             override fun log(message: String) {
-              asLoggable(message) { info() }
+              log(message) { info() }
             }
           }
-        level = io.ktor.client.plugins.logging.LogLevel.ALL
+        level = LogLevel.ALL
         sanitizeHeader { header ->
           header == io.ktor.http.HttpHeaders.Authorization
         }
@@ -69,14 +80,14 @@ inline fun <reified T : HttpClientEngineConfig> HttpClientConfig<T>.buildDefault
           buildGson()
         }
       }
-      install(io.ktor.client.plugins.compression.ContentEncoding) {
+      install(ContentEncoding) {
         deflate(1.0F)
         gzip(0.9F)
       }
-      install(io.ktor.client.plugins.UserAgent) {
+      install(UserAgent) {
         agent = "Chronos Engine"
       }
-      install(io.ktor.client.plugins.HttpRequestRetry) {
+      install(HttpRequestRetry) {
         maxRetries = 3
         retryIf { request, response ->
           !response.status.isSuccess() &&
@@ -92,8 +103,8 @@ inline fun <reified T : HttpClientEngineConfig> HttpClientConfig<T>.buildDefault
           retry * 3000L
         } // retries in 3, 6, 9, etc. seconds
       }
-      install(io.ktor.client.plugins.cache.HttpCache) {
-        val cacheFile = java.nio.file.Files.createDirectories(java.nio.file.Paths.get("build/cache")).toFile()
+      install(HttpCache) {
+        val cacheFile = Files.createDirectories(Paths.get("build/cache")).toFile()
         publicStorage(FileStorage(cacheFile))
       }
     }

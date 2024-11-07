@@ -1,6 +1,6 @@
 package chronos.engine.core.dsl
 
-import chronos.engine.core.logging.LogLevel
+import chronos.engine.core.logging.LoggableLevel
 import chronos.engine.core.logging.Loggable
 import chronos.engine.core.logging.LoggableTests
 import io.mockk.MockKAnnotations
@@ -63,7 +63,7 @@ class LoggingDslTests {
 
   @Test
   fun `test loggable log function for INFO level`() {
-    mock.log(LogLevel.INFO)
+    mock.log(LoggableLevel.INFO)
     verify(exactly = 1) { logger.info(any()) }
     verify(exactly = 0) {
       logger.error(any<String>())
@@ -75,7 +75,7 @@ class LoggingDslTests {
 
   @Test
   fun `test loggable log function for ERROR level`() {
-    mock.log(LogLevel.ERROR)
+    mock.log(LoggableLevel.ERROR)
     verify(exactly = 1) { logger.error(any()) }
     verify(exactly = 0) {
       logger.info(any<String>())
@@ -87,7 +87,7 @@ class LoggingDslTests {
 
   @Test
   fun `test loggable log function for TRACE level`() {
-    mock.log(LogLevel.TRACE)
+    mock.log(LoggableLevel.TRACE)
     verify(exactly = 1) { logger.trace(any()) }
     verify(exactly = 0) {
       logger.error(any<String>())
@@ -99,7 +99,7 @@ class LoggingDslTests {
 
   @Test
   fun `test loggable log function for DEBUG level`() {
-    mock.log(LogLevel.DEBUG)
+    mock.log(LoggableLevel.DEBUG)
     verify(exactly = 1) { logger.debug(any()) }
     verify(exactly = 0) {
       logger.error(any<String>())
@@ -111,7 +111,7 @@ class LoggingDslTests {
 
   @Test
   fun `test loggable log function for WARN level`() {
-    mock.log(LogLevel.WARN)
+    mock.log(LoggableLevel.WARN)
     verify(exactly = 1) { logger.warn(any()) }
     verify(exactly = 0) {
       logger.error(any<String>())

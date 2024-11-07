@@ -1,3 +1,5 @@
 package chronos.engine.chatbot.command
 
-abstract class BotCommand : ICommand
+import org.koin.core.component.KoinComponent
+
+abstract class BotCommand : KoinComponent, ICommand

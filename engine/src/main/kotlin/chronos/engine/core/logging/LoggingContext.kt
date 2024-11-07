@@ -12,7 +12,7 @@ data class LoggingContext<A : Logger, B : Loggable<*>>(
     fun <B : Loggable<*>> of(loggable: B): LoggingContext<Logger, B> = LoggingContext(loggable.logger, loggable)
   }
 
-  fun <A : ILogLevel> log(level: A): Unit = loggable.log(level)
+  fun <A : LoggableLevel> log(level: A): Unit = loggable.log(level)
 
   fun info() = loggable.info()
 

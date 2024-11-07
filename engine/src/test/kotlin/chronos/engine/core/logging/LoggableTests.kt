@@ -128,7 +128,7 @@ class LoggableTests {
 
   @Test
   fun `log calls correct level (info)`() {
-    mock.log(LogLevel.INFO)
+    mock.log(LoggableLevel.INFO)
     verify(exactly = 1) {
       logger.info(any())
     }
@@ -136,7 +136,7 @@ class LoggableTests {
 
   @Test
   fun `log calls correct level (debug)`() {
-    mock.log(LogLevel.DEBUG)
+    mock.log(LoggableLevel.DEBUG)
     verify(exactly = 1) {
       logger.debug(any())
     }
@@ -144,7 +144,7 @@ class LoggableTests {
 
   @Test
   fun `log calls correct level (warn)`() {
-    mock.log(LogLevel.WARN)
+    mock.log(LoggableLevel.WARN)
     verify(exactly = 1) {
       logger.warn(any())
     }
@@ -152,7 +152,7 @@ class LoggableTests {
 
   @Test
   fun `log calls correct level (trace)`() {
-    mock.log(LogLevel.TRACE)
+    mock.log(LoggableLevel.TRACE)
     verify(exactly = 1) {
       logger.trace(any())
     }
@@ -160,7 +160,7 @@ class LoggableTests {
 
   @Test
   fun `log calls correct level (error)`() {
-    mock.log(LogLevel.ERROR)
+    mock.log(LoggableLevel.ERROR)
     verify(exactly = 1) {
       logger.error(any())
     }
@@ -169,7 +169,7 @@ class LoggableTests {
   @Test
   fun `log passes correct data to logger`() {
     every { mock.getMessage() } returns "Test Value"
-    mock.log(LogLevel.INFO)
+    mock.log(LoggableLevel.INFO)
     verify(exactly = 1) {
       logger.info(any())
     }
@@ -178,7 +178,7 @@ class LoggableTests {
   @Test
   fun `log passes correct data to logger for unknown value`() {
     every { mock.getMessage() } returns "Test Value"
-    mock.log(LogLevel("Does Not Exist"))
+    mock.log(LoggableLevel("Does Not Exist"))
     verify(exactly = 1) {
       logger.trace("Test Value")
     }

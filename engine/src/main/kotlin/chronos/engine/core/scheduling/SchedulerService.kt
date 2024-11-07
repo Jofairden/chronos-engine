@@ -1,6 +1,6 @@
 package chronos.engine.core.scheduling
 
-import chronos.engine.core.dsl.asLoggable
+import chronos.engine.core.dsl.log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -9,6 +9,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
 import java.util.concurrent.ConcurrentHashMap
 
 @Suppress("UnnecessaryAbstractClass")
@@ -17,7 +18,7 @@ import java.util.concurrent.ConcurrentHashMap
  *
  * @param scope The [CoroutineScope] to execute the tasks.
  */
-abstract class SchedulerService(scope: CoroutineScope) {
+abstract class SchedulerService(scope: CoroutineScope) : KoinComponent {
   private val tasksFlow = MutableSharedFlow<TaskRequest>()
   private val jobs = ConcurrentHashMap<String, Job>()
 
@@ -25,7 +26,7 @@ abstract class SchedulerService(scope: CoroutineScope) {
     scope.launch(Dispatchers.Default) {
       tasksFlow.collect { taskRequest ->
         if (taskRequest.task == null) {
-          asLoggable("Cannot start task request if internal task is empty") {
+          log("Cannot start task request if internal task is empty") {
             error()
           }
           return@collect

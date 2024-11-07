@@ -1,31 +1,19 @@
 package chronos.engine.domain.api.coincodex
 
-import arrow.optics.optics
-import chronos.engine.core.dsl.asLoggable
+import chronos.engine.core.dsl.log
+import chronos.engine.core.scheduling.ScheduledTaskRequest
 import chronos.engine.core.scheduling.SchedulerService
-import chronos.engine.core.scheduling.TaskRequest
 import chronos.engine.domain.api.coincodex.request.GetCoinRequest
 import io.ktor.client.HttpClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
-import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class CoincodexScheduler : KoinComponent, SchedulerService(CoroutineScope(Dispatchers.IO)) {
+class CoincodexScheduler : SchedulerService(CoroutineScope(Dispatchers.IO)) {
   val client: HttpClient by inject()
   val api: CoincodexService by inject()
 
-  @optics
-  data class ScheduledGetCoin(
-    override val id: String,
-    val name: String,
-    override val repeatCount: Int = 0,
-    override val indefinitely: Boolean = false,
-    override val initialDelay: Long = 0,
-    override val delayInMillis: Long = 0,
-    override val task: (suspend () -> Unit)? = null,
-  ) : TaskRequest(id, repeatCount, indefinitely, initialDelay, delayInMillis, task)
 
   fun getRequest(name: String): GetCoinRequest {
     return GetCoinRequest(name, api)
@@ -33,19 +21,19 @@ class CoincodexScheduler : KoinComponent, SchedulerService(CoroutineScope(Dispat
 
   private val coinsToSchedule =
     listOf(
-      ScheduledGetCoin(
+      ScheduledTaskRequest(
         "Bitcoin",
         "BTC",
         initialDelay = 300L,
         delayInMillis = 60000L,
       ),
-      ScheduledGetCoin(
+      ScheduledTaskRequest(
         "Ethereum",
         "ETH",
         initialDelay = 300L,
         delayInMillis = 60000L,
       ),
-      ScheduledGetCoin(
+      ScheduledTaskRequest(
         "Cardano",
         "ADA",
         initialDelay = 300L,
@@ -55,9 +43,9 @@ class CoincodexScheduler : KoinComponent, SchedulerService(CoroutineScope(Dispat
 
   fun setup() {
     runBlocking {
-      asLoggable("[CoincodexScheduler] Scheduling repeated update tasks") { info() }
+      log("[CoincodexScheduler] Scheduling repeated update tasks") { info() }
       scheduleRepeatingGetCoin()
-      asLoggable("[CoincodexScheduler] Initialized") { info() }
+      log("[CoincodexScheduler] Initialized") { info() }
     }
   }
 
@@ -67,7 +55,7 @@ class CoincodexScheduler : KoinComponent, SchedulerService(CoroutineScope(Dispat
   // and extract only the nodes that are deemed needed
   suspend fun scheduleRepeatingGetCoin() {
     for (coin in coinsToSchedule) {
-      asLoggable("Scheduling ${coin.id} for: https://coincodex.com/api/coincodex/get_coin/") {
+      log("Scheduling ${coin.id} for: https://coincodex.com/api/coincodex/get_coin/") {
         info()
       }
       coin.copy(task = {
@@ -75,13 +63,13 @@ class CoincodexScheduler : KoinComponent, SchedulerService(CoroutineScope(Dispat
           with(api) {
             getRequest(coin.name).execute {
               val data = getJson<Coin>()
-              asLoggable("${coin.id} Price High: ${data.priceHigh24Usd} - ${coin.id} Price Low: ${data.priceLow24Usd}") {
+              log("${coin.id} Price High: ${data.priceHigh24Usd} - ${coin.id} Price Low: ${data.priceLow24Usd}") {
                 info()
               }
             }
           }
         } catch (ex: Exception) {
-          asLoggable(ex) { error() }
+          log(ex) { error() }
         }
       }).schedule()
     }

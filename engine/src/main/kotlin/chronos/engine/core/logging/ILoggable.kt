@@ -6,7 +6,7 @@ interface ILoggable<out T : Any> {
 
   fun getMessage(): String // The message to log
 
-  fun <A : ILogLevel> log(level: A) // Log based on severity
+  fun <A : LoggableLevel> log(level: A) // Log based on severity
 
   fun trace() // 	A log level describing events showing step by step execution of your code that can be ignored during the standard operation, but may be useful during extended debugging sessions.
 

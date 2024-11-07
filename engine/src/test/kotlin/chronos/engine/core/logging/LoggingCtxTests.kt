@@ -162,7 +162,7 @@ class LoggingCtxTests {
 
   @Test
   fun `log roept juiste niveau aan (info)`() {
-    mock.log(LogLevel.INFO)
+    mock.log(LoggableLevel.INFO)
     verify(exactly = 1) {
       logger.info(any())
     }
@@ -170,7 +170,7 @@ class LoggingCtxTests {
 
   @Test
   fun `log roept juiste niveau aan (debug)`() {
-    mock.log(LogLevel.DEBUG)
+    mock.log(LoggableLevel.DEBUG)
     verify(exactly = 1) {
       logger.debug(any())
     }
@@ -178,7 +178,7 @@ class LoggingCtxTests {
 
   @Test
   fun `log roept juiste niveau aan (warn)`() {
-    mock.log(LogLevel.WARN)
+    mock.log(LoggableLevel.WARN)
     verify(exactly = 1) {
       logger.warn(any())
     }
@@ -186,7 +186,7 @@ class LoggingCtxTests {
 
   @Test
   fun `log roept juiste niveau aan (trace)`() {
-    mock.log(LogLevel.TRACE)
+    mock.log(LoggableLevel.TRACE)
     verify(exactly = 1) {
       logger.trace(any())
     }
@@ -194,7 +194,7 @@ class LoggingCtxTests {
 
   @Test
   fun `log roept juiste niveau aan (error)`() {
-    mock.log(LogLevel.ERROR)
+    mock.log(LoggableLevel.ERROR)
     verify(exactly = 1) {
       logger.error(any())
     }
@@ -203,7 +203,7 @@ class LoggingCtxTests {
   @Test
   fun `log geeft juiste gegevens door aan logger`() {
     every { loggable.getMessage() } returns "Test Waarde"
-    mock.log(LogLevel.INFO)
+    mock.log(LoggableLevel.INFO)
     verify(exactly = 1) {
       logger.info("Test Waarde")
     }
@@ -212,7 +212,7 @@ class LoggingCtxTests {
   @Test
   fun `log geeft juiste gegevens door aan logger bij onbekende waarde`() {
     every { loggable.getMessage() } returns "Test Waarde"
-    mock.log(LogLevel("Bestaat Niet"))
+    mock.log(LoggableLevel("Bestaat Niet"))
     verify(exactly = 1) {
       logger.trace("Test Waarde")
     }

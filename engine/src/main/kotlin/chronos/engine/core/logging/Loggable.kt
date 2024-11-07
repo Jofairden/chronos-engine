@@ -10,13 +10,13 @@ open class Loggable<out T : Any>(
 
   override fun getMessage(): String = loggable.toString()
 
-  override fun <A : ILogLevel> log(level: A): Unit =
+  override fun <A : LoggableLevel> log(level: A): Unit =
     when (level) {
-      LogLevel.INFO -> info()
-      LogLevel.DEBUG -> debug()
-      LogLevel.WARN -> warn()
-      LogLevel.ERROR -> error()
-      LogLevel.TRACE -> trace()
+      LoggableLevel.INFO -> info()
+      LoggableLevel.DEBUG -> debug()
+      LoggableLevel.WARN -> warn()
+      LoggableLevel.ERROR -> error()
+      LoggableLevel.TRACE -> trace()
       else -> trace()
     }
 

@@ -1,6 +1,6 @@
 package chronos.engine.domain.api.swapzone
 
-import chronos.engine.core.dsl.asLoggable
+import chronos.engine.core.dsl.log
 import chronos.engine.core.scheduling.SchedulerService
 import chronos.engine.core.scheduling.TaskRequest
 import chronos.engine.domain.api.swapzone.NetworkEntity.id
@@ -8,16 +8,15 @@ import chronos.engine.domain.api.swapzone.request.exchange.CurrenciesRequest
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
-import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class SwapzoneScheduler : KoinComponent, SchedulerService(CoroutineScope(Dispatchers.IO)) {
+class SwapzoneScheduler : SchedulerService(CoroutineScope(Dispatchers.IO)) {
   val api: SwapzoneApi by inject()
 
   fun setup() {
     runBlocking {
       scheduleCurrencies()
-      asLoggable("[SwapzoneScheduler] Initialized") { info() }
+      log("[SwapzoneScheduler] Initialized") { info() }
     }
   }
 
@@ -35,13 +34,13 @@ class SwapzoneScheduler : KoinComponent, SchedulerService(CoroutineScope(Dispatc
           getRequest().execute {
             val data = getJsonCollection<NetworkObject>()
             data.forEach {
-              asLoggable("Adding new NetworkEntity with id: $id") {
+              log("Adding new NetworkEntity with id: $id") {
                 info()
               }
             }
           }
         } catch (ex: Exception) {
-          asLoggable(ex) { error() }
+          log(ex) { error() }
         }
       }
     }.schedule()

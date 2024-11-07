@@ -12,9 +12,9 @@ import org.slf4j.Logger
  * @param block the block of code to be applied to the loggable object
  * @return the loggable object after applying the block of code
  */
-fun <B : Any> asLoggable(
+fun <B : Any> log(
   value: B,
-  block: LoggingContext<Logger, Loggable<B>>.() -> Unit,
+  block: LoggingContext<Logger, Loggable<B>>.() -> Unit = {},
 ): Loggable<B> {
   val loggable = Loggable(value)
   val ctx = LoggingContext.of(loggable)
