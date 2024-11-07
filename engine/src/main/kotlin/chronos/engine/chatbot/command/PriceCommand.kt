@@ -1,5 +1,6 @@
 package chronos.engine.chatbot.command
 
+import chronos.engine.core.chatbot.command.DeferredCommand
 import chronos.engine.domain.api.mobula.MobulaService
 import kotlinx.coroutines.Dispatchers
 import net.dv8tion.jda.api.events.interaction.command.GenericCommandInteractionEvent

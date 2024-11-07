@@ -1,4 +1,4 @@
-package chronos.engine.chatbot.command
+package chronos.engine.core.chatbot.command
 
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
