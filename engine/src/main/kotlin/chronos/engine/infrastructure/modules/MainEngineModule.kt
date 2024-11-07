@@ -1,6 +1,5 @@
 package chronos.engine.infrastructure.modules
 
-import chronos.engine.chatbot.BotBuilder
 import dev.minn.jda.ktx.jdabuilder.intents
 import dev.minn.jda.ktx.jdabuilder.light
 import net.dv8tion.jda.api.JDA
@@ -9,11 +8,6 @@ import org.koin.dsl.module
 
 val chronosModule =
   module(createdAtStart = true) {
-    // Init ChronosBuilder
-    single {
-      BotBuilder()
-    }
-
     // Initialiseer de JDA client builder
     single<JDA> {
       light(getProperty("discord.token"), enableCoroutines = true) {

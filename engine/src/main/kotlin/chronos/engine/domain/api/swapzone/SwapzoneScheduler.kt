@@ -28,21 +28,20 @@ class SwapzoneScheduler : SchedulerService(CoroutineScope(Dispatchers.IO)) {
     TaskRequest(
       "Exchange/Currencies",
       initialDelay = 1000L,
-    ) {
-      with(api) {
-        try {
-          getRequest().execute {
-            val data = getJsonCollection<NetworkObject>()
-            data.forEach {
-              log("Adding new NetworkEntity with id: $id") {
-                info()
+      task = {
+        with(api) {
+          try {
+            getRequest().execute {
+              val data = getJsonCollection<NetworkObject>()
+              data.forEach {
+                log("Adding new NetworkEntity with id: $id").info()
               }
             }
+          } catch (ex: Exception) {
+            log(ex).error()
           }
-        } catch (ex: Exception) {
-          log(ex) { error() }
         }
       }
-    }.schedule()
+    ).schedule()
   }
 }

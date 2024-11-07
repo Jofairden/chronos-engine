@@ -1,8 +1,8 @@
 package chronos.engine.domain.api.coincodex
 
 import chronos.engine.core.dsl.log
-import chronos.engine.core.scheduling.ScheduledTaskRequest
 import chronos.engine.core.scheduling.SchedulerService
+import chronos.engine.core.scheduling.TaskRequest
 import chronos.engine.domain.api.coincodex.request.GetCoinRequest
 import io.ktor.client.HttpClient
 import kotlinx.coroutines.CoroutineScope
@@ -19,25 +19,31 @@ class CoincodexScheduler : SchedulerService(CoroutineScope(Dispatchers.IO)) {
     return GetCoinRequest(name, api)
   }
 
-  private val coinsToSchedule =
+  private val scheduledTasks =
     listOf(
-      ScheduledTaskRequest(
+      TaskRequest(
         "Bitcoin",
-        "BTC",
         initialDelay = 300L,
         delayInMillis = 60000L,
+        data = mapOf(
+          "currency" to "BTC",
+        )
       ),
-      ScheduledTaskRequest(
+      TaskRequest(
         "Ethereum",
-        "ETH",
         initialDelay = 300L,
         delayInMillis = 60000L,
+        data = mapOf(
+          "currency" to "ETH",
+        )
       ),
-      ScheduledTaskRequest(
+      TaskRequest(
         "Cardano",
-        "ADA",
         initialDelay = 300L,
         delayInMillis = 60000L,
+        data = mapOf(
+          "currency" to "ADA",
+        )
       ),
     )
 
@@ -54,16 +60,17 @@ class CoincodexScheduler : SchedulerService(CoroutineScope(Dispatchers.IO)) {
   // automatically
   // and extract only the nodes that are deemed needed
   suspend fun scheduleRepeatingGetCoin() {
-    for (coin in coinsToSchedule) {
-      log("Scheduling ${coin.id} for: https://coincodex.com/api/coincodex/get_coin/") {
+    for (taskRequest in scheduledTasks) {
+      log("Scheduling ${taskRequest.id} for: https://coincodex.com/api/coincodex/get_coin/") {
         info()
       }
-      coin.copy(task = {
+      taskRequest.copy(task = {
         try {
           with(api) {
-            getRequest(coin.name).execute {
+            val currency = taskRequest.data["currency"] as String
+            getRequest(currency).execute {
               val data = getJson<Coin>()
-              log("${coin.id} Price High: ${data.priceHigh24Usd} - ${coin.id} Price Low: ${data.priceLow24Usd}") {
+              log("${taskRequest.id} Price High: ${data.priceHigh24Usd} - ${taskRequest.id} Price Low: ${data.priceLow24Usd}") {
                 info()
               }
             }

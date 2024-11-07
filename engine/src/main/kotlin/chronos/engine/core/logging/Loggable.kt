@@ -3,13 +3,27 @@ package chronos.engine.core.logging
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
+/**
+ * A loggable object with type T
+ * @param T Any type
+ */
 open class Loggable<out T : Any>(
   override val loggable: T,
 ) : ILoggable<T> {
+  /**
+   * The logger that belongs to the caller of this loggable instance
+   */
   val logger: Logger = LoggerFactory.getLogger(getCallerClassName())
 
+  /**
+   * Returns the toString() value of the loggable value
+   */
   override fun getMessage(): String = loggable.toString()
 
+  /**
+   * Logs the message at the specified level
+   * @param level The level to log as (default=trace)
+   */
   override fun <A : LoggableLevel> log(level: A): Unit =
     when (level) {
       LoggableLevel.INFO -> info()
@@ -20,22 +34,37 @@ open class Loggable<out T : Any>(
       else -> trace()
     }
 
+  /**
+   * Prints the loggable as trace
+   */
   override fun trace() {
     logger.trace(getMessage())
   }
 
+  /**
+   * Prints the loggable as debug
+   */
   override fun debug() {
     logger.debug(getMessage())
   }
 
+  /**
+   * Prints the loggable as info
+   */
   override fun info() {
     logger.info(getMessage())
   }
 
+  /**
+   * Prints the loggable as a warning
+   */
   override fun warn() {
     logger.warn(getMessage())
   }
 
+  /**
+   * Prints the loggable as an error
+   */
   override fun error() {
     logger.error(getMessage())
   }

@@ -1,12 +1,13 @@
 package chronos.engine.chatbot.scheduling
 
 import chronos.engine.core.dsl.log
-import chronos.engine.core.scheduling.ScheduledTaskRequest
 import chronos.engine.core.scheduling.SchedulerService
+import chronos.engine.core.scheduling.TaskRequest
 import chronos.engine.domain.api.mobula.MobulaService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import org.koin.core.component.inject
+import java.util.concurrent.TimeUnit
 import kotlin.properties.Delegates
 
 class DataScheduler : SchedulerService(CoroutineScope(Dispatchers.IO)) {
@@ -29,19 +30,21 @@ class DataScheduler : SchedulerService(CoroutineScope(Dispatchers.IO)) {
     }
   }
 
-  enum class DataListenType {
-    BTC_PRICE;
-
-
-  }
-
-  private val coinsToSchedule =
+  private val scheduledTasks =
     listOf(
-      ScheduledTaskRequest(
-        "Bitcoin",
-        "BTC",
+      TaskRequest(
+        "datascheduler-btc-price",
+        indefinitely = true,
         initialDelay = 0L,
-        delayInMillis = 60000L,
+        delayInMillis = TimeUnit.MINUTES.toMillis(5),
+        data = mapOf(
+          "asset" to "btc",
+          "blockchain" to "btc",
+          "symbol" to "btc"
+        ),
+        task = {
+          syncBtcPrice("btc", "btc", "btc")
+        }
       ),
     )
 
@@ -52,34 +55,31 @@ class DataScheduler : SchedulerService(CoroutineScope(Dispatchers.IO)) {
     listeners[type]!!.add(callback)
   }
 
+  /**
+   * Adds a listener to the type
+   */
   fun DataListenType.listen(callback: (Double) -> Unit) {
     listeners[this]!!.add(callback)
   }
 
-  suspend fun scheduleTasks() {
-    for (coin in coinsToSchedule) {
-      log("Scheduling ${coin.id}") {
-        info()
-      }
-      coin.copy(task = {
-        try {
-          with(service) {
-            val data = getMarketData(
-              coin.name,
-              coin.name,
-              coin.name
-            ).body()
+  private suspend fun syncBtcPrice(asset: String, blockchain: String, symbol: String) {
+    try {
+      with(service) {
+        val data = getMarketData(asset, blockchain, symbol).body()
 
-            if (data.data != null) {
-              delegates.btcPrice = data.data["price"] as Double
-            }
-          }
-        } catch (ex: Exception) {
-          log(ex) { error() }
+        if (data.data != null) {
+          delegates.btcPrice = data.data["price"] as Double
         }
-      }).schedule()
+      }
+    } catch (ex: Exception) {
+      log(ex) { error() }
     }
   }
 
-
+  suspend fun scheduleTasks() {
+    for (taskRequest in scheduledTasks) {
+      log("Scheduling ${taskRequest.id}").info()
+      taskRequest.schedule()
+    }
+  }
 }

@@ -7,4 +7,5 @@ interface ITaskRequest {
   val initialDelay: Long
   val delayInMillis: Long
   val task: (suspend () -> Unit)?
+  val data: Map<String, Any>
 }
