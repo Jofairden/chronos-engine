@@ -22,48 +22,48 @@
         <ID>MaxLineLength:ILoggable.kt$ILoggable$fun debug()</ID>
         <ID>MaxLineLength:ILoggable.kt$ILoggable$fun trace()</ID>
         <ID>MaxLineLength:ILoggable.kt$ILoggable$fun warn()</ID>
-        <ID>NewLineAtEndOfFile:AthData.kt$chronos.engine.implementation.models.coincodex.AthData.kt</ID>
-        <ID>NewLineAtEndOfFile:AtlData.kt$chronos.engine.implementation.models.coincodex.AtlData.kt</ID>
-        <ID>NewLineAtEndOfFile:Coin.kt$chronos.engine.implementation.models.coincodex.Coin.kt</ID>
-        <ID>NewLineAtEndOfFile:CoincodexApi.kt$chronos.engine.implementation.api.coincodex.CoincodexApi.kt</ID>
-        <ID>NewLineAtEndOfFile:CoincodexScheduler.kt$chronos.engine.implementation.api.coincodex.CoincodexScheduler.kt
+        <ID>NewLineAtEndOfFile:AthData.kt$chronos.engine.domain.api.coincodex.AthData.kt</ID>
+        <ID>NewLineAtEndOfFile:AtlData.kt$chronos.engine.domain.api.coincodex.AtlData.kt</ID>
+        <ID>NewLineAtEndOfFile:Coin.kt$chronos.engine.domain.api.coincodex.Coin.kt</ID>
+        <ID>NewLineAtEndOfFile:CoincodexApi.kt$chronos.engine.domain.api.coincodex.CoincodexApi.kt</ID>
+        <ID>NewLineAtEndOfFile:CoincodexScheduler.kt$chronos.engine.domain.api.coincodex.CoincodexScheduler.kt
         </ID>
         <ID>
-            NewLineAtEndOfFile:CurrenciesRequest.kt$chronos.engine.implementation.api.swapzone.requests.exchange.CurrenciesRequest.kt
+            NewLineAtEndOfFile:CurrenciesRequest.kt$chronos.engine.domain.api.swapzone.requests.exchange.CurrenciesRequest.kt
         </ID>
-        <ID>NewLineAtEndOfFile:ExternalApi.kt$chronos.engine.implementation.api.ExternalApi.kt</ID>
-        <ID>NewLineAtEndOfFile:GetCoinRequest.kt$chronos.engine.implementation.api.coincodex.request.GetCoinRequest.kt
+        <ID>NewLineAtEndOfFile:chronos.engine.domain.api.ExternalApi.kt$chronos.engine.domain.api.chronos.engine.domain.api.ExternalApi.kt</ID>
+        <ID>NewLineAtEndOfFile:GetCoinRequest.kt$chronos.engine.domain.api.coincodex.request.GetCoinRequest.kt
         </ID>
-        <ID>NewLineAtEndOfFile:HTTPClientService.kt$chronos.engine.implementation.services.HTTPClientService.kt</ID>
+        <ID>NewLineAtEndOfFile:HTTPClientService.kt$chronos.engine.domain.services.HTTPClientService.kt</ID>
         <ID>NewLineAtEndOfFile:HttpClientConfiguration.kt$chronos.engine.modules.HttpClientConfiguration.kt</ID>
         <ID>NewLineAtEndOfFile:IExternalApi.kt$chronos.engine.core.interfaces.apis.IExternalApi.kt</ID>
         <ID>
             NewLineAtEndOfFile:IExternalApiAuthenticator.kt$chronos.engine.core.interfaces.apis.IExternalApiAuthenticator.kt
         </ID>
         <ID>NewLineAtEndOfFile:IExternalApiRequest.kt$chronos.engine.core.interfaces.apis.IExternalApiRequest.kt</ID>
-        <ID>NewLineAtEndOfFile:ILogLevel.kt$chronos.engine.core.interfaces.ILogLevel.kt</ID>
-        <ID>NewLineAtEndOfFile:ILoggable.kt$chronos.engine.core.interfaces.ILoggable.kt</ID>
+        <ID>NewLineAtEndOfFile:ILogLevel.kt$chronos.engine.core.logging.ILogLevel.kt</ID>
+        <ID>NewLineAtEndOfFile:ILoggable.kt$chronos.engine.core.logging.ILoggable.kt</ID>
         <ID>NewLineAtEndOfFile:IService.kt$chronos.engine.core.interfaces.IService.kt</ID>
-        <ID>NewLineAtEndOfFile:InitialData.kt$chronos.engine.implementation.models.coincodex.InitialData.kt</ID>
+        <ID>NewLineAtEndOfFile:InitialData.kt$chronos.engine.domain.api.coincodex.InitialData.kt</ID>
         <ID>
             NewLineAtEndOfFile:LocalDateTimeTypeAdapter.kt$chronos.engine.core.gson.adapters.LocalDateTimeTypeAdapter.kt
         </ID>
         <ID>NewLineAtEndOfFile:LocalDateTypeAdapter.kt$chronos.engine.core.gson.adapters.LocalDateTypeAdapter.kt</ID>
-        <ID>NewLineAtEndOfFile:LogLevel.kt$chronos.engine.implementation.logging.LogLevel.kt</ID>
-        <ID>NewLineAtEndOfFile:LogService.kt$chronos.engine.implementation.services.LogService.kt</ID>
-        <ID>NewLineAtEndOfFile:Loggable.kt$chronos.engine.implementation.logging.Loggable.kt</ID>
-        <ID>NewLineAtEndOfFile:Network.kt$chronos.engine.implementation.models.swapzone.Network.kt</ID>
-        <ID>NewLineAtEndOfFile:NetworkEntity.kt$chronos.engine.implementation.models.swapzone.db.NetworkEntity.kt</ID>
+        <ID>NewLineAtEndOfFile:LogLevel.kt$chronos.engine.domain.logging.LogLevel.kt</ID>
+        <ID>NewLineAtEndOfFile:LogService.kt$chronos.engine.domain.services.LogService.kt</ID>
+        <ID>NewLineAtEndOfFile:Loggable.kt$chronos.engine.domain.logging.Loggable.kt</ID>
+        <ID>NewLineAtEndOfFile:Network.kt$chronos.engine.domain.models.swapzone.Network.kt</ID>
+        <ID>NewLineAtEndOfFile:NetworkEntity.kt$chronos.engine.domain.api.swapzone.NetworkEntity.kt</ID>
         <ID>NewLineAtEndOfFile:Reflection.kt$chronos.engine.util.Reflection.kt</ID>
-        <ID>NewLineAtEndOfFile:SchedulerService.kt$chronos.engine.core.services.SchedulerService.kt</ID>
+        <ID>NewLineAtEndOfFile:SchedulerService.kt$chronos.engine.core.scheduling.SchedulerService.kt</ID>
         <ID>NewLineAtEndOfFile:SchemaConfiguration.kt$chronos.engine.modules.SchemaConfiguration.kt</ID>
-        <ID>NewLineAtEndOfFile:Social.kt$chronos.engine.implementation.models.coincodex.Social.kt</ID>
-        <ID>NewLineAtEndOfFile:Socials.kt$chronos.engine.implementation.models.coincodex.Socials.kt</ID>
-        <ID>NewLineAtEndOfFile:SwapzoneApi.kt$chronos.engine.implementation.api.swapzone.SwapzoneApi.kt</ID>
-        <ID>NewLineAtEndOfFile:SwapzoneController.kt$chronos.engine.implementation.api.swapzone.SwapzoneController.kt
+        <ID>NewLineAtEndOfFile:Social.kt$chronos.engine.domain.api.coincodex.Social.kt</ID>
+        <ID>NewLineAtEndOfFile:Socials.kt$chronos.engine.domain.api.coincodex.Socials.kt</ID>
+        <ID>NewLineAtEndOfFile:SwapzoneApi.kt$chronos.engine.domain.api.swapzone.SwapzoneApi.kt</ID>
+        <ID>NewLineAtEndOfFile:SwapzoneController.kt$chronos.engine.domain.api.swapzone.SwapzoneController.kt
         </ID>
-        <ID>NewLineAtEndOfFile:SwapzoneScheduler.kt$chronos.engine.implementation.api.swapzone.SwapzoneScheduler.kt</ID>
-        <ID>NewLineAtEndOfFile:SwapzoneService.kt$chronos.engine.implementation.api.swapzone.SwapzoneService.kt</ID>
+        <ID>NewLineAtEndOfFile:SwapzoneScheduler.kt$chronos.engine.domain.api.swapzone.SwapzoneScheduler.kt</ID>
+        <ID>NewLineAtEndOfFile:SwapzoneService.kt$chronos.engine.domain.api.swapzone.SwapzoneService.kt</ID>
         <ID>SpreadOperator:EngineApplication.kt$EngineApplication.Companion$(*args)</ID>
         <ID>TooGenericExceptionCaught:CoincodexScheduler.kt$CoincodexScheduler$ex: Exception</ID>
         <ID>TooGenericExceptionCaught:SwapzoneScheduler.kt$SwapzoneScheduler$ex: Exception</ID>
@@ -76,7 +76,7 @@
         </ID>
         <ID>WildcardImport:CoincodexApi.kt$import io.ktor.client.request.*</ID>
         <ID>WildcardImport:CoincodexApi.kt$import io.ktor.client.statement.*</ID>
-        <ID>WildcardImport:ExternalApi.kt$import io.ktor.client.statement.*</ID>
+        <ID>WildcardImport:chronos.engine.domain.api.ExternalApi.kt$import io.ktor.client.statement.*</ID>
         <ID>WildcardImport:HTTPClientService.kt$import io.ktor.client.*</ID>
         <ID>WildcardImport:HttpClientConfiguration.kt$import io.ktor.client.*</ID>
         <ID>WildcardImport:HttpClientConfiguration.kt$import io.ktor.client.engine.okhttp.*</ID>

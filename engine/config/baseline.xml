@@ -9,10 +9,10 @@
         <ID>MaxLineLength:ILoggable.kt$ILoggable$fun trace()</ID>
         <ID>MaxLineLength:ILoggable.kt$ILoggable$fun warn()</ID>
         <ID>
-            NewLineAtEndOfFile:CoincodexGetCoinResource.kt$chronos.engine.implementation.api.coincodex.resource.CoincodexGetCoinResource.kt
+            NewLineAtEndOfFile:CoincodexGetCoinResource.kt$chronos.engine.domain.api.coincodex.resource.CoincodexGetCoinResource.kt
         </ID>
         <ID>NewLineAtEndOfFile:CoincodexModules.kt$chronos.engine.modules.CoincodexModules.kt</ID>
-        <ID>NewLineAtEndOfFile:CoincodexRoutes.kt$chronos.engine.routes.CoincodexRoutes.kt</ID>
+        <ID>NewLineAtEndOfFile:CoincodexRoutes.kt$chronos.engine.routing.CoincodexRoutes.kt</ID>
         <ID>NewLineAtEndOfFile:Cors.kt$chronos.engine.plugins.Cors.kt</ID>
         <ID>NewLineAtEndOfFile:EngineApplication.kt$chronos.engine.EngineApplication.kt</ID>
         <ID>NewLineAtEndOfFile:Koin.kt$chronos.engine.plugins.Koin.kt</ID>
@@ -21,9 +21,9 @@
         <ID>NewLineAtEndOfFile:Serialization.kt$chronos.engine.plugins.Serialization.kt</ID>
         <ID>NewLineAtEndOfFile:SwapzoneModules.kt$chronos.engine.modules.SwapzoneModules.kt</ID>
         <ID>
-            NewLineAtEndOfFile:SwapzoneNetworksResource.kt$chronos.engine.implementation.api.swapzone.resouce.SwapzoneNetworksResource.kt
+            NewLineAtEndOfFile:SwapzoneNetworksResource.kt$chronos.engine.domain.api.swapzone.resouce.SwapzoneNetworksResource.kt
         </ID>
-        <ID>NewLineAtEndOfFile:SwapzoneRoutes.kt$chronos.engine.routes.SwapzoneRoutes.kt</ID>
+        <ID>NewLineAtEndOfFile:SwapzoneRoutes.kt$chronos.engine.routing.SwapzoneRoutes.kt</ID>
         <ID>UnusedPrivateProperty:CoincodexSchedulerTests.kt$CoincodexSchedulerTests$private lateinit var api:
             CoincodexApi
         </ID>

@@ -1,6 +1,6 @@
 package chronos.engine.core.dsl
 
-import chronos.engine.implementation.api.ExternalApi
+import chronos.engine.domain.api.ExternalApi
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.application.call
@@ -39,24 +39,25 @@ suspend inline fun <reified T : Any> PipelineContext<Unit, ApplicationCall>.notF
 suspend inline fun <reified T : Any> PipelineContext<Unit, ApplicationCall>.respondBody(body: T) {
   call.respond(body)
 }
+
 /**
  * Executes a route-specific API call and handles the response.
  *
- * @param T The type of the ExternalApi.
+ * @param T The type of the chronos.engine.domain.api.ExternalApi.
  * @param A The type of the HttpResponse.
- * @param api The instance of the ExternalApi to use for the API call.
+ * @param api The instance of the chronos.engine.domain.api.ExternalApi to use for the API call.
  * @param block The lambda function that defines the route-specific API call.
  *
  * @throws IOException if there is an error in reading the response body.
  * @throws CancellationException if the coroutine is cancelled.
  */
-suspend inline fun <reified T : ExternalApi, reified A : Serializable> PipelineContext<Unit, ApplicationCall>.process(api: T,
-                                                                                                                      block: T.() -> HttpResponse<A>
+suspend inline fun <reified T : ExternalApi, reified A : Serializable> PipelineContext<Unit, ApplicationCall>.process(
+  api: T,
+  block: T.() -> HttpResponse<A>,
 ) {
   with(api.block()) { // run route specific call and get response
-    with(api) {// with api in context
+    with(api) { // with api in context
       handle(this@process) // hanlde this process pipeline
     }
   }
 }
-

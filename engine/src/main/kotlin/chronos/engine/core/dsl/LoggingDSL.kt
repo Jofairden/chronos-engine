@@ -1,7 +1,7 @@
 package chronos.engine.core.dsl
 
-import chronos.engine.implementation.logging.Loggable
-import chronos.engine.implementation.logging.LoggingContext
+import chronos.engine.core.logging.Loggable
+import chronos.engine.core.logging.LoggingContext
 import org.slf4j.Logger
 
 /**

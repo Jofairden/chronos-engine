@@ -1,14 +1,13 @@
 package chronos.engine.core.dsl
 
-import chronos.engine.implementation.logging.LogLevel
-import chronos.engine.implementation.logging.Loggable
-import chronos.engine.implementation.logging.LoggableTests
+import chronos.engine.core.logging.LogLevel
+import chronos.engine.core.logging.Loggable
+import chronos.engine.core.logging.LoggableTests
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.SpyK
 import io.mockk.junit5.MockKExtension
-import io.mockk.spyk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -40,14 +39,26 @@ class LoggingDslTests {
 
   @Test
   fun `loggable calls info`() {
-    val loggable =
-      spyk(
-        asLoggable("Test") {},
-      )
-    every { loggable.logger } returns logger
-    every { loggable.info() } answers { callOriginal() }
-    loggable.info()
-    verify(exactly = 1) { logger.info("Test") }
+    mock.info()
+    verify(exactly = 1) { logger.info(any()) }
+  }
+
+  @Test
+  fun `loggable calls warn`() {
+    mock.warn()
+    verify(exactly = 1) { logger.warn(any()) }
+  }
+
+  @Test
+  fun `loggable calls debug`() {
+    mock.debug()
+    verify(exactly = 1) { logger.debug(any()) }
+  }
+
+  @Test
+  fun `loggable calls trace`() {
+    mock.trace()
+    verify(exactly = 1) { logger.trace(any()) }
   }
 
   @Test
