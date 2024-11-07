@@ -19,7 +19,7 @@ class ChronosInternals : KoinComponent {
   private val commands by inject<ChronosCommands>()
   private val jda by inject<JDA>()
 
-  suspend fun start() {
+  suspend fun start(args: Array<String>) {
     log("Initializing JDA").info()
 
     initJdaEventListeners()

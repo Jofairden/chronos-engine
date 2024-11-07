@@ -34,15 +34,6 @@ fun main(args: Array<String>) {
       createEagerInstances()
     }
 
-  ChronosApplication.bot = ChronosBot().start {
-    log("Starting bot at ${OffsetDateTime.now(ZoneId.systemDefault())}")
-      .info()
-  }
-}
-
-/**
- * Geeft de Koin instantie terug
- */
-fun koin(): KoinApplication {
-  return ChronosApplication.koin
+  log("Starting bot at ${OffsetDateTime.now(ZoneId.systemDefault())}").info()
+  ChronosApplication.bot = ChronosBot().start(args)
 }

@@ -11,14 +11,14 @@ abstract class DeferredCommand : BotCommand() {
 
   open fun coroutineContext(): CoroutineContext = Dispatchers.Default
 
-  abstract suspend fun deferredInvoke(event: GenericCommandInteractionEvent, args: List<String>)
+  abstract suspend fun deferredInvoke(event: GenericCommandInteractionEvent)
 
-  override fun invoke(event: GenericCommandInteractionEvent, args: List<String>) {
+  override fun invoke(event: GenericCommandInteractionEvent) {
     event.deferReply()
 
     val scope = CoroutineScope(CoroutineName("command-job-${event.guild?.id}-${event.user.id}-${name}"))
     scope.launch(coroutineContext()) {
-      deferredInvoke(event, args)
+      deferredInvoke(event)
     }
   }
 }

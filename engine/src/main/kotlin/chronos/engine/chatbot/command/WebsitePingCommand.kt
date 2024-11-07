@@ -1,12 +1,12 @@
 package chronos.engine.chatbot.command
 
 import chronos.engine.core.chatbot.command.DeferredCommand
+import chronos.engine.core.dsl.log
 import net.dv8tion.jda.api.events.interaction.command.GenericCommandInteractionEvent
 import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData
 import java.io.IOException
-import java.net.HttpURLConnection
-import java.net.URI
+import java.net.InetAddress
 import java.util.concurrent.TimeUnit
 
 class WebsitePingCommand : DeferredCommand() {
@@ -18,17 +18,21 @@ class WebsitePingCommand : DeferredCommand() {
     get() = "Pingt de website"
 
   override fun configure(data: SlashCommandData): Unit = with(data) {
-    setDefaultPermissions(DefaultMemberPermissions.ENABLED)
+    defaultPermissions = DefaultMemberPermissions.ENABLED
   }
 
-  override suspend fun deferredInvoke(event: GenericCommandInteractionEvent, args: List<String>) {
+  override suspend fun deferredInvoke(event: GenericCommandInteractionEvent) {
     val isAvailable = pingURL(
       WEBSITE_URL,
       TimeUnit.SECONDS.toMillis(5)
     )
-    val isAvailableText =if (isAvailable) "online" else "offline"
 
-    event.hook.editOriginal("Website is $isAvailableText").queue()
+    if (!isAvailable) {
+      event.reply("Fout bij controleren van website.").queue()
+      return
+    }
+
+    event.reply("Website is online").queue()
   }
 
   /**
@@ -41,21 +45,17 @@ class WebsitePingCommand : DeferredCommand() {
    * given timeout, otherwise `false`.
    */
   fun pingURL(url: String, timeout: Long): Boolean {
-//    val url = url.replaceFirst("^https".toRegex(), "http") // Otherwise an exception may be thrown on invalid SSL certificates.
-
     try {
-      val connection: HttpURLConnection = URI(url).toURL().openConnection() as HttpURLConnection
-      connection.setConnectTimeout(timeout.toInt())
-      connection.setReadTimeout(timeout.toInt())
-      connection.setRequestMethod("GET")
-      val responseCode: Int = connection.getResponseCode()
-      return (responseCode in 200..399)
-    } catch (exception: IOException) {
+      val inet = InetAddress.getByName(url)
+      val reachable = inet.isReachable(timeout.toInt())
+      return reachable
+    } catch (e: IOException) {
+      log(e).error()
       return false
     }
   }
 
   companion object {
-    private val WEBSITE_URL = "https://www.marketmilker.com/"
+    private val WEBSITE_URL = "www.marketmilker.com"
   }
 }

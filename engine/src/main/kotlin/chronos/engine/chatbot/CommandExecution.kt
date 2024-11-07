@@ -10,9 +10,8 @@ import org.koin.core.component.KoinComponent
 /**
  * Defines how a command is executed and configured
  */
-class CommandExecution<T : BotCommand>(
-  val botCommand: T,
-  val configuration: SlashCommandData.() -> Unit = {}
+class CommandExecution(
+  val botCommand: BotCommand,
 ) : KoinComponent, ICommand {
 
   override val name: String
@@ -25,13 +24,12 @@ class CommandExecution<T : BotCommand>(
     return Commands.slash(name, description).configure()
   }
 
-  override fun invoke(event: GenericCommandInteractionEvent, args: List<String>) {
-    botCommand.invoke(event, args)
+  override fun invoke(event: GenericCommandInteractionEvent) {
+    botCommand.invoke(event)
   }
 
   private fun SlashCommandData.configure(): SlashCommandData {
     botCommand.configure(this)
-    configuration(this)
     return this
   }
 }

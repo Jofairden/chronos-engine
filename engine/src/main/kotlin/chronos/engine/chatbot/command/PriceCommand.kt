@@ -19,12 +19,12 @@ class PriceCommand : DeferredCommand() {
     get() = "Haalt de BTC prijs op"
 
   override fun configure(data: SlashCommandData): Unit = with(data) {
-    setDefaultPermissions(DefaultMemberPermissions.ENABLED)
+    defaultPermissions = DefaultMemberPermissions.ENABLED
   }
 
   override fun coroutineContext() = Dispatchers.IO
 
-  override suspend fun deferredInvoke(event: GenericCommandInteractionEvent, args: List<String>) {
+  override suspend fun deferredInvoke(event: GenericCommandInteractionEvent) {
     val data = service.getMarketData(
       "BTC",
       "BTC",

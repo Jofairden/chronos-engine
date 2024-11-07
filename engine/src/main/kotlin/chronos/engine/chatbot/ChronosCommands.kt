@@ -1,15 +1,11 @@
 package chronos.engine.chatbot
 
-import chronos.engine.chatbot.command.PingCommand
-import chronos.engine.chatbot.command.PriceCommand
-import chronos.engine.chatbot.command.WebsitePingCommand
 import chronos.engine.core.chatbot.IBotInternalProcessor
-import chronos.engine.core.chatbot.command.DeferredCommand
+import chronos.engine.core.chatbot.command.CommandStore
 import dev.minn.jda.ktx.events.onCommand
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.get
 import org.koin.core.component.inject
 
 /**
@@ -18,21 +14,13 @@ import org.koin.core.component.inject
 class ChronosCommands : IBotInternalProcessor, KoinComponent {
 
   private val jda: JDA by inject()
-
-  /**
-   * Contains all commands that can be executed
-   */
-  private val commandStore = arrayOf(
-    CommandExecution(get<PingCommand>()),
-    CommandExecution(get<PriceCommand>()),
-    CommandExecution(get<WebsitePingCommand>()),
-  )
+  private val store: CommandStore by inject()
 
   /**
    * Returns the commands to be used by JDA
    */
   override fun getCommands(): List<SlashCommandData> {
-    return commandStore.map(CommandExecution<out DeferredCommand>::getCommandData)
+    return store.allExecutions.map(CommandExecution::getCommandData)
   }
 
   /**
@@ -40,9 +28,9 @@ class ChronosCommands : IBotInternalProcessor, KoinComponent {
    */
   override fun initSlashCommands() {
     with(jda) {
-      commandStore.forEach { command ->
+      store.allExecutions.forEach { command ->
         onCommand(command.name) {
-          command.botCommand.invoke(it, emptyList())
+          command.botCommand.invoke(it)
         }
       }
     }

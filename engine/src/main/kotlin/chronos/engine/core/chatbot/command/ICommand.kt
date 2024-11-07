@@ -8,6 +8,5 @@ interface ICommand {
 
   fun invoke(
     event: GenericCommandInteractionEvent,
-    args: List<String>,
   )
 }

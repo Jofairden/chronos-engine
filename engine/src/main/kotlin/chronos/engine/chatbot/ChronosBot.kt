@@ -16,10 +16,9 @@ class ChronosBot : KoinComponent {
   /**
    * Starts the bot
    */
-  fun start(block: ChronosBot.() -> Unit): ChronosBot {
-    block.invoke(this)
+  fun start(args: Array<String>): ChronosBot {
     CoroutineScope(Dispatchers.IO).launch {
-      internals.start()
+      internals.start(args)
     }
     return this
   }
