@@ -124,12 +124,21 @@ dependencies {
   implementation("io.insert-koin:koin-logger-slf4j:${versions["koin"]}")
   ksp("io.insert-koin:koin-ksp-compiler:${versions["koinKsp"]}")
 
+  //    Needed at runtime for suspended @Controller endpoints
+  runtimeOnly("org.reactivestreams:reactive-streams:${versions["reactiveStreams"]}")
+  runtimeOnly("org.reactivestreams:reactive-streams-tck:${versions["reactiveStreams"]}")
+  runtimeOnly("org.reactivestreams:reactive-streams-tck-flow:${versions["reactiveStreams"]}")
+  //    Needed at runtime for suspended @Controller endpoints
+
   // OpenAPI
   implementation("org.openapitools:openapi-generator:${versions["openApiTools"]}")
   implementation("org.openapitools:openapi-generator-cli:${versions["openApiTools"]}")
   implementation("org.openapitools:openapi-generator-gradle-plugin:6.6.0")
 
   // TEST
+  testImplementation("io.insert-koin:koin-test:${versions["koin"]}")
+  testImplementation("io.insert-koin:koin-test-junit5:${versions["koin"]}")
+  testImplementation("io.mockk:mockk:${versions["mockk"]}")
   testImplementation("io.mockk:mockk:${versions["mockk"]}")
   testImplementation("io.ktor:ktor-server-test-host:${versions["ktor"]}")
 }
