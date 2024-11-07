@@ -1,7 +1,6 @@
 package chronos.engine.chatbot.command
 
 import chronos.engine.core.chatbot.command.DeferredCommand
-import chronos.engine.core.dsl.log
 import net.dv8tion.jda.api.events.interaction.command.GenericCommandInteractionEvent
 import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData
@@ -22,17 +21,17 @@ class WebsitePingCommand : DeferredCommand() {
   }
 
   override suspend fun deferredInvoke(event: GenericCommandInteractionEvent) {
-    val isAvailable = pingURL(
-      WEBSITE_URL,
-      TimeUnit.SECONDS.toMillis(5)
-    )
-
-    if (!isAvailable) {
+    val isAvailable = try {
+      pingURL(
+        WEBSITE_URL,
+        TimeUnit.SECONDS.toMillis(5)
+      )
+    } catch (e: IOException) {
       event.reply("Fout bij controleren van website.").queue()
       return
     }
 
-    event.reply("Website is online").queue()
+    event.reply("Website is ${(if (isAvailable) "online" else "offline")}").queue()
   }
 
   /**
@@ -45,14 +44,9 @@ class WebsitePingCommand : DeferredCommand() {
    * given timeout, otherwise `false`.
    */
   fun pingURL(url: String, timeout: Long): Boolean {
-    try {
-      val inet = InetAddress.getByName(url)
-      val reachable = inet.isReachable(timeout.toInt())
-      return reachable
-    } catch (e: IOException) {
-      log(e).error()
-      return false
-    }
+    val inet = InetAddress.getByName(url)
+    val reachable = inet.isReachable(timeout.toInt())
+    return reachable
   }
 
   companion object {
