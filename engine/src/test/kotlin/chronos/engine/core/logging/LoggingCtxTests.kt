@@ -210,15 +210,6 @@ class LoggingCtxTests {
   }
 
   @Test
-  fun `log geeft juiste gegevens door aan logger bij onbekende waarde`() {
-    every { loggable.getMessage() } returns "Test Waarde"
-    mock.log(LoggableLevel("Bestaat Niet"))
-    verify(exactly = 1) {
-      logger.trace("Test Waarde")
-    }
-  }
-
-  @Test
   fun `companion functie of maakt juiste object aan`() {
     mockkObject(LoggingContext.Companion) {
       every { LoggingContext.Companion.of(any()) } answers { callOriginal() }

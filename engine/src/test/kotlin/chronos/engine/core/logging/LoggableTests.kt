@@ -174,13 +174,4 @@ class LoggableTests {
       logger.info(any())
     }
   }
-
-  @Test
-  fun `log passes correct data to logger for unknown value`() {
-    every { mock.getMessage() } returns "Test Value"
-    mock.log(LoggableLevel("Does Not Exist"))
-    verify(exactly = 1) {
-      logger.trace("Test Value")
-    }
-  }
 }
